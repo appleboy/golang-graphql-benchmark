@@ -15,12 +15,6 @@
 			"revisionTime": "2018-06-09T14:05:35Z"
 		},
 		{
-			"checksumSHA1": "HPrCwF7Xp5dkX7u3kmBAKl0GcRc=",
-			"path": "github.com/graph-gophers/graphql-go/gqltesting",
-			"revision": "bb9738501bd42a6536227b96068349b814379d6e",
-			"revisionTime": "2018-06-09T14:05:35Z"
-		},
-		{
 			"checksumSHA1": "Tggf7x/oZkiv5yQznRyHzZcU1vo=",
 			"path": "github.com/graph-gophers/graphql-go/internal/common",
 			"revision": "bb9738501bd42a6536227b96068349b814379d6e",

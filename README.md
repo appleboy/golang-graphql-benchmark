@@ -18,6 +18,8 @@ $ go test -v -bench=. -benchmem
 
 Result:
 
+
+
 ```
 BenchmarkGoGraphQLMaster-4                 20000             84131 ns/op           27254 B/op        489 allocs/op
 BenchmarkPlaylyfeGraphQLMaster-4          200000              7531 ns/op            2919 B/op         59 allocs/op
