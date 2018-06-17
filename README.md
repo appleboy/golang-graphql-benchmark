@@ -11,13 +11,13 @@ benchmark of graphql framework in golang.
 Please execute the following command.
 
 ```
-$ go test -v -bench .
+$ go test -v -bench=. -benchmem
 ```
 
 Result:
 
 ```
-BenchmarkGoGraphQLMaster-4                 20000            129572 ns/op
-BenchmarkPlaylyfeGraphQLMaster-4          200000              9141 ns/op
-BenchmarkGophersGraphQLMaster-4           200000              5263 ns/op
+BenchmarkGoGraphQLMaster-4                 20000             84131 ns/op           27254 B/op        489 allocs/op
+BenchmarkPlaylyfeGraphQLMaster-4          200000              7531 ns/op            2919 B/op         59 allocs/op
+BenchmarkGophersGraphQLMaster-4           200000              5041 ns/op            3909 B/op         39 allocs/op
 ```
