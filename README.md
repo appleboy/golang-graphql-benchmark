@@ -2,8 +2,8 @@
 
 benchmark of graphql framework in golang.
 
-* [graphql-go/graphql](github.com/graphql-go/graphql)
-* [playlyfe/go-graphql](github.com/playlyfe/go-graphql)
+* [graphql-go/graphql](https://github.com/graphql-go/graphql)
+* [playlyfe/go-graphql](https://github.com/playlyfe/go-graphql)
 * [graph-gophers/graphql-go](https://github.com/graph-gophers/graphql-go)
 
 ## Benchmark Result
