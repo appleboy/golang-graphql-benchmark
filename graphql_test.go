@@ -27,6 +27,8 @@ var schema, _ = graphql.NewSchema(
 )
 
 func BenchmarkGoGraphQLMaster(b *testing.B) {
+	// Disable SpecifiedRules
+	// graphql.SpecifiedRules = []graphql.ValidationRuleFn{}
 	for i := 0; i < b.N; i++ {
 		graphql.Do(graphql.Params{
 			Schema:        schema,
