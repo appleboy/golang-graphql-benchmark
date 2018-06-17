@@ -3,6 +3,12 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "QdSIO+gp41BqNti0ZDVdXvfDvDo=",
+			"path": "github.com/gorilla/websocket",
+			"revision": "5ed622c449da6d44c3c8329331ff47a9e5844f71",
+			"revisionTime": "2018-06-05T20:25:52Z"
+		},
+		{
 			"checksumSHA1": "DtBBMi8wNxFzHRZdZHa/Gpxw1fc=",
 			"path": "github.com/graph-gophers/graphql-go",
 			"revision": "bb9738501bd42a6536227b96068349b814379d6e",
@@ -203,6 +209,36 @@
 			"path": "github.com/playlyfe/go-graphql/utils",
 			"revision": "64c119482156d8902d31e5dd1436da8316ff45a6",
 			"revisionTime": "2017-04-28T20:40:03Z"
+		},
+		{
+			"checksumSHA1": "nkZQ+zNe835JnpH5P/BlMV4dyNA=",
+			"path": "github.com/samsarahq/thunder/batch",
+			"revision": "9eca877eb7fa9acdfe05e5cd6546fbd84475ee0a",
+			"revisionTime": "2018-06-15T13:30:34Z"
+		},
+		{
+			"checksumSHA1": "mTc+aW35Qi+8J9gtbKCuhQrPoP4=",
+			"path": "github.com/samsarahq/thunder/concurrencylimiter",
+			"revision": "9eca877eb7fa9acdfe05e5cd6546fbd84475ee0a",
+			"revisionTime": "2018-06-15T13:30:34Z"
+		},
+		{
+			"checksumSHA1": "RmRJ541Ra7PSweqLNW0H04AHTto=",
+			"path": "github.com/samsarahq/thunder/diff",
+			"revision": "9eca877eb7fa9acdfe05e5cd6546fbd84475ee0a",
+			"revisionTime": "2018-06-15T13:30:34Z"
+		},
+		{
+			"checksumSHA1": "KOeO/gM5ZMf7GjccYCLTap9NZ2Y=",
+			"path": "github.com/samsarahq/thunder/graphql",
+			"revision": "9eca877eb7fa9acdfe05e5cd6546fbd84475ee0a",
+			"revisionTime": "2018-06-15T13:30:34Z"
+		},
+		{
+			"checksumSHA1": "n0VT7BpGu0sWIvyIELJZ/yewqhM=",
+			"path": "github.com/samsarahq/thunder/reactive",
+			"revision": "9eca877eb7fa9acdfe05e5cd6546fbd84475ee0a",
+			"revisionTime": "2018-06-15T13:30:34Z"
 		}
 	],
 	"rootPath": "golang-graphql-benchmark"
