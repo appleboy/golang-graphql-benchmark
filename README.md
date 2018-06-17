@@ -11,6 +11,8 @@ benchmark of graphql framework in golang.
 Please execute the following command.
 
 ```
+$ git clone https://github.com/appleboy/golang-graphql-benchmark.git
+$ cd golang-graphql-benchmark
 $ go test -v -bench=. -benchmem
 ```
 
