@@ -23,3 +23,17 @@ BenchmarkGoGraphQLMaster-4                 20000             84131 ns/op        
 BenchmarkPlaylyfeGraphQLMaster-4          200000              7531 ns/op            2919 B/op         59 allocs/op
 BenchmarkGophersGraphQLMaster-4           200000              5041 ns/op            3909 B/op         39 allocs/op
 ```
+
+set `benchtime` to `3s`
+
+```
+$ go test -v -bench=. -benchmem -benchtime=3s
+```
+
+Result: 
+
+```
+BenchmarkGoGraphQLMaster-4                 30000            102029 ns/op           27255 B/op        489 allocs/op
+BenchmarkPlaylyfeGraphQLMaster-4          500000              8421 ns/op            2917 B/op         59 allocs/op
+BenchmarkGophersGraphQLMaster-4          1000000              5428 ns/op            3909 B/op         39 allocs/op
+```
