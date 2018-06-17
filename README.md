@@ -4,6 +4,7 @@ benchmark of graphql framework in golang.
 
 * [graphql-go/graphql](github.com/graphql-go/graphql)
 * [playlyfe/go-graphql](github.com/playlyfe/go-graphql)
+* [graph-gophers/graphql-go](https://github.com/graph-gophers/graphql-go)
 
 ## Benchmark Result
 
@@ -16,6 +17,7 @@ $ go test -v -bench .
 Result:
 
 ```
-BenchmarkGoGraphQLMaster-4                 20000             81387 ns/op
-BenchmarkPlaylyfeGraphQLMaster-4          200000              7791 ns/op
+BenchmarkGoGraphQLMaster-4                 20000            129572 ns/op
+BenchmarkPlaylyfeGraphQLMaster-4          200000              9141 ns/op
+BenchmarkGophersGraphQLMaster-4           200000              5263 ns/op
 ```

@@ -3,6 +3,90 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "DtBBMi8wNxFzHRZdZHa/Gpxw1fc=",
+			"path": "github.com/graph-gophers/graphql-go",
+			"revision": "bb9738501bd42a6536227b96068349b814379d6e",
+			"revisionTime": "2018-06-09T14:05:35Z"
+		},
+		{
+			"checksumSHA1": "/i+oMCC/osxe0KfoC8lbIuZom0o=",
+			"path": "github.com/graph-gophers/graphql-go/errors",
+			"revision": "bb9738501bd42a6536227b96068349b814379d6e",
+			"revisionTime": "2018-06-09T14:05:35Z"
+		},
+		{
+			"checksumSHA1": "HPrCwF7Xp5dkX7u3kmBAKl0GcRc=",
+			"path": "github.com/graph-gophers/graphql-go/gqltesting",
+			"revision": "bb9738501bd42a6536227b96068349b814379d6e",
+			"revisionTime": "2018-06-09T14:05:35Z"
+		},
+		{
+			"checksumSHA1": "Tggf7x/oZkiv5yQznRyHzZcU1vo=",
+			"path": "github.com/graph-gophers/graphql-go/internal/common",
+			"revision": "bb9738501bd42a6536227b96068349b814379d6e",
+			"revisionTime": "2018-06-09T14:05:35Z"
+		},
+		{
+			"checksumSHA1": "+/eG3aWfDvF0SZvhrHeqkusmXd4=",
+			"path": "github.com/graph-gophers/graphql-go/internal/exec",
+			"revision": "bb9738501bd42a6536227b96068349b814379d6e",
+			"revisionTime": "2018-06-09T14:05:35Z"
+		},
+		{
+			"checksumSHA1": "Bucl75VZRgPBboreGJQKIv/RHcY=",
+			"path": "github.com/graph-gophers/graphql-go/internal/exec/packer",
+			"revision": "bb9738501bd42a6536227b96068349b814379d6e",
+			"revisionTime": "2018-06-09T14:05:35Z"
+		},
+		{
+			"checksumSHA1": "f7z1lY9FZb94cjigMeyitcViCp8=",
+			"path": "github.com/graph-gophers/graphql-go/internal/exec/resolvable",
+			"revision": "bb9738501bd42a6536227b96068349b814379d6e",
+			"revisionTime": "2018-06-09T14:05:35Z"
+		},
+		{
+			"checksumSHA1": "Av5FNzd017kuEmWPo1MeyPRardw=",
+			"path": "github.com/graph-gophers/graphql-go/internal/exec/selected",
+			"revision": "bb9738501bd42a6536227b96068349b814379d6e",
+			"revisionTime": "2018-06-09T14:05:35Z"
+		},
+		{
+			"checksumSHA1": "qTSJ5fVIb7rls1gvyVrFmDZuyfw=",
+			"path": "github.com/graph-gophers/graphql-go/internal/query",
+			"revision": "bb9738501bd42a6536227b96068349b814379d6e",
+			"revisionTime": "2018-06-09T14:05:35Z"
+		},
+		{
+			"checksumSHA1": "IbbCtOhKdNHh46gSFm4V8ECXCZQ=",
+			"path": "github.com/graph-gophers/graphql-go/internal/schema",
+			"revision": "bb9738501bd42a6536227b96068349b814379d6e",
+			"revisionTime": "2018-06-09T14:05:35Z"
+		},
+		{
+			"checksumSHA1": "/XZnz6Oi6pirh6zdn9QRPiZClUk=",
+			"path": "github.com/graph-gophers/graphql-go/internal/validation",
+			"revision": "bb9738501bd42a6536227b96068349b814379d6e",
+			"revisionTime": "2018-06-09T14:05:35Z"
+		},
+		{
+			"checksumSHA1": "JY1146PnFG5ZY82Drfti2yW6Wqo=",
+			"path": "github.com/graph-gophers/graphql-go/introspection",
+			"revision": "bb9738501bd42a6536227b96068349b814379d6e",
+			"revisionTime": "2018-06-09T14:05:35Z"
+		},
+		{
+			"checksumSHA1": "Sb3/9Zf+anzyutfqxD2CxTVdDG0=",
+			"path": "github.com/graph-gophers/graphql-go/log",
+			"revision": "bb9738501bd42a6536227b96068349b814379d6e",
+			"revisionTime": "2018-06-09T14:05:35Z"
+		},
+		{
+			"checksumSHA1": "4rdWXZp7lvNmRwUHYnELTPng8/8=",
+			"path": "github.com/graph-gophers/graphql-go/trace",
+			"revision": "bb9738501bd42a6536227b96068349b814379d6e",
+			"revisionTime": "2018-06-09T14:05:35Z"
+		},
+		{
 			"checksumSHA1": "6rUii8b25Sa7WXH4SkvttdAk9/I=",
 			"path": "github.com/graphql-go/graphql",
 			"revision": "1e23489041ba90a66f317fe0deccb236a2fff3cb",
@@ -89,6 +173,24 @@
 			"revisionTime": "2018-03-08T22:41:35Z",
 			"version": "v0.7.5",
 			"versionExact": "v0.7.5"
+		},
+		{
+			"checksumSHA1": "wIcN7tZiF441h08RHAm4NV8cYO4=",
+			"path": "github.com/opentracing/opentracing-go",
+			"revision": "bd9c3193394760d98b2fa6ebb2291f0cd1d06a7d",
+			"revisionTime": "2018-06-06T20:41:48Z"
+		},
+		{
+			"checksumSHA1": "uhDxBvLEqRAMZKgpTZ8MFuLIIM8=",
+			"path": "github.com/opentracing/opentracing-go/ext",
+			"revision": "bd9c3193394760d98b2fa6ebb2291f0cd1d06a7d",
+			"revisionTime": "2018-06-06T20:41:48Z"
+		},
+		{
+			"checksumSHA1": "tnkdNJbJxNKuPZMWapP1xhKIIGw=",
+			"path": "github.com/opentracing/opentracing-go/log",
+			"revision": "bd9c3193394760d98b2fa6ebb2291f0cd1d06a7d",
+			"revisionTime": "2018-06-06T20:41:48Z"
 		},
 		{
 			"checksumSHA1": "6GvEyhLSR0TgkEHj8c8ommsM6Rw=",

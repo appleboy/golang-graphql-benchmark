@@ -1,8 +1,10 @@
 package graphql_test
 
 import (
+	"context"
 	"testing"
 
+	ggql "github.com/graph-gophers/graphql-go"
 	"github.com/graphql-go/graphql"
 	pgql "github.com/playlyfe/go-graphql"
 )
@@ -50,5 +52,28 @@ func BenchmarkPlaylyfeGraphQLMaster(b *testing.B) {
 		context := map[string]interface{}{}
 		variables := map[string]interface{}{}
 		executor.Execute(context, "{hello}", variables, "")
+	}
+}
+
+type helloWorldResolver1 struct{}
+
+func (r *helloWorldResolver1) Hello() string {
+	return "world"
+}
+
+var schema3 = ggql.MustParseSchema(`
+schema {
+  query: Query
+}
+type Query {
+  hello: String!
+}
+`, &helloWorldResolver1{})
+
+func BenchmarkGophersGraphQLMaster(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		ctx := context.Background()
+		variables := map[string]interface{}{}
+		schema3.Exec(ctx, "{hello}", "", variables)
 	}
 }
