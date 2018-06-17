@@ -5,6 +5,7 @@ benchmark of graphql framework in golang.
 * [graphql-go/graphql](https://github.com/graphql-go/graphql)
 * [playlyfe/go-graphql](https://github.com/playlyfe/go-graphql)
 * [graph-gophers/graphql-go](https://github.com/graph-gophers/graphql-go)
+* [samsarahq/thunder](https://github.com/samsarahq/thunder)
 
 ## Benchmark Result
 
@@ -19,9 +20,10 @@ $ go test -v -bench=. -benchmem
 Result:
 
 ```
-BenchmarkGoGraphQLMaster-4                 20000             84131 ns/op           27254 B/op        489 allocs/op
-BenchmarkPlaylyfeGraphQLMaster-4          200000              7531 ns/op            2919 B/op         59 allocs/op
-BenchmarkGophersGraphQLMaster-4           200000              5041 ns/op            3909 B/op         39 allocs/op
+BenchmarkGoGraphQLMaster-4                 20000             92699 ns/op           27255 B/op        489 allocs/op
+BenchmarkPlaylyfeGraphQLMaster-4          200000              8452 ns/op            2921 B/op         59 allocs/op
+BenchmarkGophersGraphQLMaster-4           200000              5285 ns/op            3909 B/op         39 allocs/op
+BenchmarkThunderGraphQLMaster-4           300000              3771 ns/op            1984 B/op         42 allocs/op
 ```
 
 set `benchtime` to `3s`
@@ -33,7 +35,8 @@ $ go test -v -bench=. -benchmem -benchtime=3s
 Result: 
 
 ```
-BenchmarkGoGraphQLMaster-4                 30000            102029 ns/op           27255 B/op        489 allocs/op
-BenchmarkPlaylyfeGraphQLMaster-4          500000              8421 ns/op            2917 B/op         59 allocs/op
-BenchmarkGophersGraphQLMaster-4          1000000              5428 ns/op            3909 B/op         39 allocs/op
+BenchmarkGoGraphQLMaster-4                 50000             87048 ns/op           27254 B/op        489 allocs/op
+BenchmarkPlaylyfeGraphQLMaster-4          500000              7888 ns/op            2920 B/op         59 allocs/op
+BenchmarkGophersGraphQLMaster-4          1000000              5185 ns/op            3909 B/op         39 allocs/op
+BenchmarkThunderGraphQLMaster-4          1000000              3779 ns/op            1984 B/op         42 allocs/op
 ```

@@ -7,6 +7,7 @@ import (
 	ggql "github.com/graph-gophers/graphql-go"
 	"github.com/graphql-go/graphql"
 	pgql "github.com/playlyfe/go-graphql"
+	thunder "github.com/samsarahq/thunder/graphql"
 )
 
 var schema, _ = graphql.NewSchema(
@@ -77,5 +78,31 @@ func BenchmarkGophersGraphQLMaster(b *testing.B) {
 		ctx := context.Background()
 		variables := map[string]interface{}{}
 		schema3.Exec(ctx, "{hello}", "", variables)
+	}
+}
+
+func BenchmarkThunderGraphQLMaster(b *testing.B) {
+	noArguments := func(json interface{}) (interface{}, error) {
+		return nil, nil
+	}
+	var query = &thunder.Object{
+		Name:   "Query",
+		Fields: make(map[string]*thunder.Field),
+	}
+
+	query.Fields["hello"] = &thunder.Field{
+		Resolve: func(ctx context.Context, source, args interface{}, selectionSet *thunder.SelectionSet) (interface{}, error) {
+			return "world", nil
+		},
+		Type:           &thunder.Scalar{Type: "string"},
+		ParseArguments: noArguments,
+	}
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		q := thunder.MustParse(`{hello}`, map[string]interface{}{})
+		ctx := context.Background()
+		e := thunder.Executor{}
+		e.Execute(ctx, query, nil, q)
 	}
 }
