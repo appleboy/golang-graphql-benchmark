@@ -7,6 +7,14 @@ benchmark of graphql framework in golang.
 * [graph-gophers/graphql-go](https://github.com/graph-gophers/graphql-go)
 * [samsarahq/thunder](https://github.com/samsarahq/thunder)
 
+## Environment
+
+```
+OS: Ubuntu 14.04
+Memory: 24G
+CPU: Intel(R) Xeon(R) CPU X5670  @ 2.93GHz
+```
+
 ## Benchmark Result
 
 Please execute the following command.
@@ -20,10 +28,10 @@ $ go test -v -bench=. -benchmem
 Result:
 
 ```
-BenchmarkGoGraphQLMaster-4                 20000             92699 ns/op           27255 B/op        489 allocs/op
-BenchmarkPlaylyfeGraphQLMaster-4          200000              8452 ns/op            2921 B/op         59 allocs/op
-BenchmarkGophersGraphQLMaster-4           200000              5285 ns/op            3909 B/op         39 allocs/op
-BenchmarkThunderGraphQLMaster-4           300000              3771 ns/op            1984 B/op         42 allocs/op
+BenchmarkGoGraphQLMaster-12                10000            137017 ns/op           27712 B/op        500 allocs/op
+BenchmarkPlaylyfeGraphQLMaster-12         200000             11353 ns/op            3174 B/op         61 allocs/op
+BenchmarkGophersGraphQLMaster-12          100000             12459 ns/op            3877 B/op         38 allocs/op
+BenchmarkThunderGraphQLMaster-12          200000              8149 ns/op            2192 B/op         48 allocs/op
 ```
 
 set `benchtime` to `3s`
@@ -35,8 +43,8 @@ $ go test -v -bench=. -benchmem -benchtime=3s
 Result: 
 
 ```
-BenchmarkGoGraphQLMaster-4                 50000             87048 ns/op           27254 B/op        489 allocs/op
-BenchmarkPlaylyfeGraphQLMaster-4          500000              7888 ns/op            2920 B/op         59 allocs/op
-BenchmarkGophersGraphQLMaster-4          1000000              5185 ns/op            3909 B/op         39 allocs/op
-BenchmarkThunderGraphQLMaster-4          1000000              3779 ns/op            1984 B/op         42 allocs/op
+BenchmarkGoGraphQLMaster-12                30000            134769 ns/op           27711 B/op        500 allocs/op
+BenchmarkPlaylyfeGraphQLMaster-12         500000             12034 ns/op            3174 B/op         61 allocs/op
+BenchmarkGophersGraphQLMaster-12          300000             12525 ns/op            3877 B/op         38 allocs/op
+BenchmarkThunderGraphQLMaster-12          500000              8194 ns/op            2192 B/op         48 allocs/op
 ```
