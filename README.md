@@ -37,7 +37,7 @@ BenchmarkThunderGraphQLMaster-12          200000              8149 ns/op        
 set `benchtime` to `3s`
 
 ```
-$ go test -v -bench=. -benchmem -benchtime=3s
+$ go test -v -bench=Master -benchmem -benchtime=3s
 ```
 
 Result: 
