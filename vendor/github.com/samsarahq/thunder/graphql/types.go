@@ -26,6 +26,23 @@ func (s *Scalar) String() string {
 	return s.Type
 }
 
+// Enum is a leaf value
+type Enum struct {
+	Type       string
+	Values     []string
+	ReverseMap map[interface{}]string
+}
+
+func (e *Enum) isType() {}
+
+func (e *Enum) String() string {
+	return e.Type
+}
+
+func (e *Enum) enumValues() []string {
+	return e.Values
+}
+
 // Object is a value with several fields
 type Object struct {
 	Name        string
@@ -73,12 +90,27 @@ func (n *NonNull) String() string {
 	return fmt.Sprintf("%s!", n.Type)
 }
 
+// Union is a option between multiple types
+type Union struct {
+	Name        string
+	Description string
+	Types       map[string]*Object
+}
+
+func (*Union) isType() {}
+
+func (u *Union) String() string {
+	return u.Name
+}
+
 // Verify *Scalar, *Object, *List, *InputObject, and *NonNull implement Type
 var _ Type = &Scalar{}
 var _ Type = &Object{}
 var _ Type = &List{}
 var _ Type = &InputObject{}
 var _ Type = &NonNull{}
+var _ Type = &Enum{}
+var _ Type = &Union{}
 
 // A Resolver calculates the value of a field of an object
 type Resolver func(ctx context.Context, source, args interface{}, selectionSet *SelectionSet) (interface{}, error)
@@ -122,7 +154,6 @@ type Schema struct {
 type SelectionSet struct {
 	Selections []*Selection
 	Fragments  []*Fragment
-	Complex    bool // Complex is true if a selection set has any nested selection sets
 }
 
 // A selection represents a part of a GraphQL query
