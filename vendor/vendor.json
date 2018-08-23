@@ -117,6 +117,12 @@
 			"revisionTime": "2018-06-09T14:05:35Z"
 		},
 		{
+			"checksumSHA1": "h9lR2l7dWiXo/yF4zq6XZE4MEBY=",
+			"path": "github.com/graph-gophers/graphql-go/relay",
+			"revision": "94da0f0031f9d30a1d56cd4b56e40852516c3301",
+			"revisionTime": "2018-08-06T17:57:03Z"
+		},
+		{
 			"checksumSHA1": "4rdWXZp7lvNmRwUHYnELTPng8/8=",
 			"path": "github.com/graph-gophers/graphql-go/trace",
 			"revision": "bb9738501bd42a6536227b96068349b814379d6e",

@@ -1,46 +1,26 @@
 package graphql_test
 
 import (
+	"io"
 	"io/ioutil"
 	"net/http"
+	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/gin-gonic/gin"
+	"github.com/graph-gophers/graphql-go/relay"
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/handler"
 )
 
-type mockWriter struct {
-	headers http.Header
-}
-
-func newMockWriter() *mockWriter {
-	return &mockWriter{
-		http.Header{},
-	}
-}
-
-func (m *mockWriter) Header() (h http.Header) {
-	return m.headers
-}
-
-func (m *mockWriter) Write(p []byte) (n int, err error) {
-	return len(p), nil
-}
-
-func (m *mockWriter) WriteString(s string) (n int, err error) {
-	return len(s), nil
-}
-
-func (m *mockWriter) WriteHeader(int) {}
-
-func runRequest(B *testing.B, r *gin.Engine, method, path string) {
+func runRequest(B *testing.B, r *gin.Engine, method, path string, body io.Reader) {
 	// create fake request
-	req, err := http.NewRequest(method, path, nil)
+	req, err := http.NewRequest(method, path, body)
 	if err != nil {
 		panic(err)
 	}
-	w := newMockWriter()
+	w := httptest.NewRecorder()
 	B.ReportAllocs()
 	B.ResetTimer()
 	for i := 0; i < B.N; i++ {
@@ -65,8 +45,7 @@ var newSchema, _ = graphql.NewSchema(
 	},
 )
 
-// Handler initializes the graphql middleware.
-func Handler() gin.HandlerFunc {
+func goGraphQLHandler() gin.HandlerFunc {
 	// Creates a GraphQL-go HTTP handler with the defined schema
 	h := handler.New(&handler.Config{
 		Schema: &newSchema,
@@ -78,25 +57,43 @@ func Handler() gin.HandlerFunc {
 	}
 }
 
+// Handler initializes the graphql middleware.
+func gophersGraphQLHandler() gin.HandlerFunc {
+	// Creates a GraphQL-go HTTP handler with the defined schema
+	r := &relay.Handler{Schema: schema3}
+
+	return func(c *gin.Context) {
+		r.ServeHTTP(c.Writer, c.Request)
+	}
+}
+
 func BenchmarkGinHttpRoute(B *testing.B) {
 	gin.SetMode(gin.ReleaseMode)
 	gin.DefaultWriter = ioutil.Discard
 	router := gin.New()
-	router.GET("/hello", func(c *gin.Context) {
+	router.POST("/hello", func(c *gin.Context) {
 		c.JSON(
-			200,
+			http.StatusOK,
 			gin.H{
-				"hello": "world",
+				"data": gin.H{"hello": "world"},
 			},
 		)
 	})
-	runRequest(B, router, "GET", "/hello")
+	runRequest(B, router, "POST", "/hello", strings.NewReader(`{"query":"{ hello }", "operationName":"", "variables": null}`))
 }
 
-func BenchmarkGinGraphQLRoute(B *testing.B) {
+func BenchmarkGinGoGraphQLRoute(B *testing.B) {
 	gin.SetMode(gin.ReleaseMode)
 	gin.DefaultWriter = ioutil.Discard
 	router := gin.New()
-	router.GET("/graphql", Handler())
-	runRequest(B, router, "GET", "/graphql?query={hello}")
+	router.GET("/graphql", goGraphQLHandler())
+	runRequest(B, router, "GET", "/graphql?query={hello}", nil)
+}
+
+func BenchmarkGinGopherGraphQLRoute(B *testing.B) {
+	gin.SetMode(gin.ReleaseMode)
+	gin.DefaultWriter = ioutil.Discard
+	router := gin.New()
+	router.POST("/graphql", gophersGraphQLHandler())
+	runRequest(B, router, "POST", "/graphql", strings.NewReader(`{"query":"{ hello }", "operationName":"", "variables": null}`))
 }
