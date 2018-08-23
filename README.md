@@ -58,6 +58,6 @@ $ go test -v -bench=Route -benchmem
 Result:
 
 ```
-BenchmarkHttpRoute-4             1000000              1438 ns/op             768 B/op         10 allocs/op
-BenchmarkGraphQLRoute-4            20000             94167 ns/op           28839 B/op        508 allocs/op
+BenchmarkGinHttpRoute-12          500000              2715 ns/op             768 B/op         10 allocs/op
+BenchmarkGinGraphQLRoute-12        10000            157519 ns/op           29299 B/op        519 allocs/op
 ```
