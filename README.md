@@ -22,7 +22,7 @@ Please execute the following command.
 ```
 $ git clone https://github.com/appleboy/golang-graphql-benchmark.git
 $ cd golang-graphql-benchmark
-$ go test -v -bench=. -benchmem
+$ go test -v -bench=Master -benchmem
 ```
 
 Result:
@@ -47,4 +47,17 @@ BenchmarkGoGraphQLMaster-12                30000            134769 ns/op        
 BenchmarkPlaylyfeGraphQLMaster-12         500000             12034 ns/op            3174 B/op         61 allocs/op
 BenchmarkGophersGraphQLMaster-12          300000             12525 ns/op            3877 B/op         38 allocs/op
 BenchmarkThunderGraphQLMaster-12          500000              8194 ns/op            2192 B/op         48 allocs/op
+```
+
+Testing with http framwork using [Gin](https://github.com/gin-gonic/gin)
+
+```
+$ go test -v -bench=Route -benchmem
+```
+
+Result:
+
+```
+BenchmarkHttpRoute-4             1000000              1438 ns/op             768 B/op         10 allocs/op
+BenchmarkGraphQLRoute-4            20000             94167 ns/op           28839 B/op        508 allocs/op
 ```
