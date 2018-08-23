@@ -1,7 +1,6 @@
 package graphql_benchmark
 
 import (
-	"io"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -15,9 +14,9 @@ import (
 	"github.com/samsarahq/thunder/graphql/introspection"
 )
 
-func runRequest(B *testing.B, r *gin.Engine, method, path string, body io.Reader) {
+func runRequest(B *testing.B, r *gin.Engine, method, path string) {
 	// create fake request
-	req, err := http.NewRequest(method, path, body)
+	req, err := http.NewRequest(method, path, strings.NewReader(`{"query":"{ hello }", "operationName":"", "variables": null}`))
 	if err != nil {
 		panic(err)
 	}
@@ -26,22 +25,10 @@ func runRequest(B *testing.B, r *gin.Engine, method, path string, body io.Reader
 	B.ResetTimer()
 	for i := 0; i < B.N; i++ {
 		r.ServeHTTP(w, req)
-		// contentType := w.Header().Get("Content-Type")
-		// log.Println()
-		// if contentType == "application/json" {
-		// 	log.Println("test")
-		// }
-		// actualResponse := w.Body.String()
-		// log.Println(actualResponse)
-		// log.Println(contentType)
-		// if actualResponse == `{"data":{"hello":"world"}}` {
-		// 	log.Println("done")
-		// }
 	}
 }
 
 func goGraphQLHandler() gin.HandlerFunc {
-	// Creates a GraphQL-go HTTP handler with the defined schema
 	h := handler.New(&handler.Config{
 		Schema: &graphQLGoSchema,
 	})
@@ -51,9 +38,7 @@ func goGraphQLHandler() gin.HandlerFunc {
 	}
 }
 
-// Handler initializes the graphql middleware.
 func gophersGraphQLHandler() gin.HandlerFunc {
-	// Creates a GraphQL-go HTTP handler with the defined schema
 	r := &relay.Handler{Schema: gopherSchema}
 
 	return func(c *gin.Context) {
@@ -61,13 +46,10 @@ func gophersGraphQLHandler() gin.HandlerFunc {
 	}
 }
 
-// Handler initializes the graphql middleware.
 func thunderGraphQLHandler() gin.HandlerFunc {
 	server := &thunderServer{}
-
 	thunderSchema := server.schema()
 	introspection.AddIntrospectionToSchema(thunderSchema)
-	// Creates a GraphQL-go HTTP handler with the defined schema
 	r := thql.HTTPHandler(thunderSchema)
 
 	return func(c *gin.Context) {
@@ -87,15 +69,15 @@ func BenchmarkGinHttpRoute(B *testing.B) {
 			},
 		)
 	})
-	runRequest(B, router, "POST", "/hello", strings.NewReader(`{"query":"{ hello }", "operationName":"", "variables": null}`))
+	runRequest(B, router, "POST", "/hello")
 }
 
 func BenchmarkGinGoGraphQLRoute(B *testing.B) {
 	gin.SetMode(gin.ReleaseMode)
 	gin.DefaultWriter = ioutil.Discard
 	router := gin.New()
-	router.GET("/graphql", goGraphQLHandler())
-	runRequest(B, router, "GET", "/graphql?query={hello}", nil)
+	router.POST("/graphql", goGraphQLHandler())
+	runRequest(B, router, "POST", "/graphql")
 }
 
 func BenchmarkGinGopherGraphQLRoute(B *testing.B) {
@@ -103,7 +85,7 @@ func BenchmarkGinGopherGraphQLRoute(B *testing.B) {
 	gin.DefaultWriter = ioutil.Discard
 	router := gin.New()
 	router.POST("/graphql", gophersGraphQLHandler())
-	runRequest(B, router, "POST", "/graphql", strings.NewReader(`{"query":"{ hello }", "operationName":"", "variables": null}`))
+	runRequest(B, router, "POST", "/graphql")
 }
 
 func BenchmarkGinThunderGraphQLRoute(B *testing.B) {
@@ -111,5 +93,5 @@ func BenchmarkGinThunderGraphQLRoute(B *testing.B) {
 	gin.DefaultWriter = ioutil.Discard
 	router := gin.New()
 	router.POST("/graphql", thunderGraphQLHandler())
-	runRequest(B, router, "POST", "/graphql", strings.NewReader(`{"query":"{ hello }", "operationName":"hello", "variables": null}`))
+	runRequest(B, router, "POST", "/graphql")
 }
