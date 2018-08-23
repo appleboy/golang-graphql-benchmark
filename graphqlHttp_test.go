@@ -1,4 +1,4 @@
-package graphql_test
+package graphql_benchmark
 
 import (
 	"io"
@@ -10,7 +10,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/graph-gophers/graphql-go/relay"
-	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/handler"
 )
 
@@ -25,31 +24,24 @@ func runRequest(B *testing.B, r *gin.Engine, method, path string, body io.Reader
 	B.ResetTimer()
 	for i := 0; i < B.N; i++ {
 		r.ServeHTTP(w, req)
+		// contentType := w.Header().Get("Content-Type")
+		// log.Println()
+		// if contentType == "application/json" {
+		// 	log.Println("test")
+		// }
+		// actualResponse := w.Body.String()
+		// log.Println(actualResponse)
+		// log.Println(contentType)
+		// if actualResponse == `{"data":{"hello":"world"}}` {
+		// 	log.Println("done")
+		// }
 	}
 }
-
-var newSchema, _ = graphql.NewSchema(
-	graphql.SchemaConfig{
-		Query: graphql.NewObject(
-			graphql.ObjectConfig{
-				Name: "RootQueryType",
-				Fields: graphql.Fields{
-					"hello": &graphql.Field{
-						Type: graphql.String,
-						Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-							return "world", nil
-						},
-					},
-				},
-			}),
-	},
-)
 
 func goGraphQLHandler() gin.HandlerFunc {
 	// Creates a GraphQL-go HTTP handler with the defined schema
 	h := handler.New(&handler.Config{
-		Schema: &newSchema,
-		Pretty: true,
+		Schema: &graphQLGoSchema,
 	})
 
 	return func(c *gin.Context) {
@@ -60,7 +52,7 @@ func goGraphQLHandler() gin.HandlerFunc {
 // Handler initializes the graphql middleware.
 func gophersGraphQLHandler() gin.HandlerFunc {
 	// Creates a GraphQL-go HTTP handler with the defined schema
-	r := &relay.Handler{Schema: schema3}
+	r := &relay.Handler{Schema: gopherSchema}
 
 	return func(c *gin.Context) {
 		r.ServeHTTP(c.Writer, c.Request)
