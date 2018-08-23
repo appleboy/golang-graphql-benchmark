@@ -58,6 +58,7 @@ $ go test -v -bench=Route -benchmem
 Result:
 
 ```
-BenchmarkGinHttpRoute-12          500000              2715 ns/op             768 B/op         10 allocs/op
-BenchmarkGinGraphQLRoute-12        10000            157519 ns/op           29299 B/op        519 allocs/op
+BenchmarkGinHttpRoute-12                  300000              3993 ns/op            1423 B/op         18 allocs/op
+BenchmarkGinGoGraphQLRoute-12              10000            162348 ns/op           29386 B/op        519 allocs/op
+BenchmarkGinGopherGraphQLRoute-12        1000000              1860 ns/op            1066 B/op          6 allocs/op
 ```
