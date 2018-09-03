@@ -1,4 +1,4 @@
-package graphqlBenchmark
+package graphqlbenchmark
 
 import (
 	ggql "github.com/graph-gophers/graphql-go"
