@@ -70,7 +70,7 @@ BenchmarkGinThunderGraphQLRoute-12        500000              2869 ns/op        
 
 ### 
 
-## gin + graphql-go
+## [gin + graphql-go](golang/graphql-go)
 
 ```
 $ wrk -t12 -c400 -d30s --timeout 10s --script=golang/post.lua --latency "http://localhost:8080/graphql"
@@ -89,7 +89,7 @@ Requests/sec:  30888.47
 Transfer/sec:      4.39MB
 ```
 
-## gin + graph-gophers
+## [gin + graph-gophers](golang/graph-gophers)
 
 ```
 $ wrk -t12 -c400 -d30s --timeout 10s --script=golang/post.lua --latency "http://localhost:8080/graphql"
@@ -108,7 +108,7 @@ Requests/sec:  89330.39
 Transfer/sec:     11.42MB
 ```
 
-## gin + thunder
+## [gin + thunder](golang/thunder)
 
 ```
 $ wrk -t12 -c400 -d30s --timeout 10s --script=golang/post.lua --latency "http://localhost:8080/graphql"
