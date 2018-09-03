@@ -48,3 +48,23 @@ Running 30s test @ http://localhost:8080/graphql
 Requests/sec:  18959.51
 Transfer/sec:      2.42MB
 ```
+
+## gin + thunder
+
+```
+$ wrk -t12 -c400 -d30s --timeout 10s --script=golang/post.lua --latency "http://localhost:8080/graphql"
+Running 30s test @ http://localhost:8080/graphql
+  12 threads and 400 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    68.56ms  102.66ms   1.15s    87.76%
+    Req/Sec     1.05k   393.60     3.68k    74.09%
+  Latency Distribution
+     50%   22.35ms
+     75%   91.03ms
+     90%  194.78ms
+     99%  482.67ms
+  375764 requests in 30.10s, 68.45MB read
+  Socket errors: connect 0, read 2, write 0, timeout 0
+Requests/sec:  12482.84
+Transfer/sec:      2.27MB
+```
