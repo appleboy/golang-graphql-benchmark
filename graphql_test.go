@@ -1,4 +1,4 @@
-package graphql_benchmark
+package graphqlBenchmark
 
 import (
 	"context"
