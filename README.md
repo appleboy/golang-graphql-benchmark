@@ -129,6 +129,6 @@ Transfer/sec:     11.93MB
 
 ## Sumary
 
-||graphql-go|graph-gophers|thunder|
-|-|----------|-------------|-------|
-|Requests/sec|30888.47|**89330.39**|65515.21|
+|              | graphql-go | graph-gophers | thunder  |
+|--------------|------------|---------------|----------|
+| Requests/sec | 30888.47   | **89330.39**  | 65515.21 |
