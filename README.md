@@ -127,10 +127,35 @@ Requests/sec:  65515.21
 Transfer/sec:     11.93MB
 ```
 
+## [gin josn] output
+
+```
+$ wrk -t12 -c400 -d30s --timeout 10s --script=golang/json.lua --latency "http://localhost:8080/graphql"
+Running 30s test @ http://localhost:8080/graphql
+  12 threads and 400 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     4.06ms    4.95ms 205.31ms   90.45%
+    Req/Sec    10.18k     1.85k   23.76k    76.87%
+  Latency Distribution
+     50%    3.03ms
+     75%    4.85ms
+     90%    8.76ms
+     99%   20.86ms
+  3631750 requests in 30.06s, 516.06MB read
+Requests/sec: 120818.56
+Transfer/sec:     17.17MB
+```
+
 ## Sumary
 
-|               | Requests/sec |
-|---------------|--------------|
-| graphql-go    | 30888.47     |
-| graph-gophers | **89330.39** |
-| thunder       | 65515.21     |
+|                   | Requests/sec |
+|-------------------|--------------|
+| graphql-go        | 30888.47     |
+| **graph-gophers** | **89330.39** |
+| thunder           | 65515.21     |
+
+Without graphql (only gin render json output)
+
+|                      | Requests/sec  |
+|----------------------|---------------|
+| json without graphql | **120818.56** |
