@@ -2,10 +2,10 @@
 
 benchmark of graphql framework in golang.
 
-* [graphql-go/graphql](https://github.com/graphql-go/graphql)
-* [playlyfe/go-graphql](https://github.com/playlyfe/go-graphql)
-* [graph-gophers/graphql-go](https://github.com/graph-gophers/graphql-go)
-* [samsarahq/thunder](https://github.com/samsarahq/thunder)
+* [graphql-go/graphql](https://github.com/graphql-go/graphql) version: 2018-09-12T00:08:44Z
+* [playlyfe/go-graphql](https://github.com/playlyfe/go-graphql) version: 2017-04-28T20:40:03Z
+* [graph-gophers/graphql-go](https://github.com/graph-gophers/graphql-go) version: 2018-06-09T14:05:35Z
+* [samsarahq/thunder](https://github.com/samsarahq/thunder) version: 2018-08-21T22:33:29Z
 
 ## Environment
 
