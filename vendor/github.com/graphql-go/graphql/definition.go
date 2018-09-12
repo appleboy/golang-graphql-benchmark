@@ -43,38 +43,22 @@ var _ Input = (*NonNull)(nil)
 
 // IsInputType determines if given type is a GraphQLInputType
 func IsInputType(ttype Type) bool {
-	named := GetNamed(ttype)
-	if _, ok := named.(*Scalar); ok {
+	switch GetNamed(ttype).(type) {
+	case *Scalar, *Enum, *InputObject:
 		return true
+	default:
+		return false
 	}
-	if _, ok := named.(*Enum); ok {
-		return true
-	}
-	if _, ok := named.(*InputObject); ok {
-		return true
-	}
-	return false
 }
 
 // IsOutputType determines if given type is a GraphQLOutputType
 func IsOutputType(ttype Type) bool {
-	name := GetNamed(ttype)
-	if _, ok := name.(*Scalar); ok {
+	switch GetNamed(ttype).(type) {
+	case *Scalar, *Object, *Interface, *Union, *Enum:
 		return true
+	default:
+		return false
 	}
-	if _, ok := name.(*Object); ok {
-		return true
-	}
-	if _, ok := name.(*Interface); ok {
-		return true
-	}
-	if _, ok := name.(*Union); ok {
-		return true
-	}
-	if _, ok := name.(*Enum); ok {
-		return true
-	}
-	return false
 }
 
 // Leaf interface for types that may be leaf values
@@ -91,14 +75,12 @@ var _ Leaf = (*Enum)(nil)
 
 // IsLeafType determines if given type is a leaf value
 func IsLeafType(ttype Type) bool {
-	named := GetNamed(ttype)
-	if _, ok := named.(*Scalar); ok {
+	switch GetNamed(ttype).(type) {
+	case *Scalar, *Enum:
 		return true
+	default:
+		return false
 	}
-	if _, ok := named.(*Enum); ok {
-		return true
-	}
-	return false
 }
 
 // Output interface for types that may be used as output types as the result of fields.
@@ -131,16 +113,12 @@ var _ Composite = (*Union)(nil)
 
 // IsCompositeType determines if given type is a GraphQLComposite type
 func IsCompositeType(ttype interface{}) bool {
-	if _, ok := ttype.(*Object); ok {
+	switch ttype.(type) {
+	case *Object, *Interface, *Union:
 		return true
+	default:
+		return false
 	}
-	if _, ok := ttype.(*Interface); ok {
-		return true
-	}
-	if _, ok := ttype.(*Union); ok {
-		return true
-	}
-	return false
 }
 
 // Abstract interface for types that may describe the parent context of a selection set.
@@ -152,13 +130,12 @@ var _ Abstract = (*Interface)(nil)
 var _ Abstract = (*Union)(nil)
 
 func IsAbstractType(ttype interface{}) bool {
-	if _, ok := ttype.(*Interface); ok {
+	switch ttype.(type) {
+	case *Interface, *Union:
 		return true
+	default:
+		return false
 	}
-	if _, ok := ttype.(*Union); ok {
-		return true
-	}
-	return false
 }
 
 // Nullable interface for types that can accept null as a value.
@@ -197,17 +174,15 @@ var _ Named = (*InputObject)(nil)
 func GetNamed(ttype Type) Named {
 	unmodifiedType := ttype
 	for {
-		if ttype, ok := unmodifiedType.(*List); ok {
-			unmodifiedType = ttype.OfType
-			continue
+		switch typ := unmodifiedType.(type) {
+		case *List:
+			unmodifiedType = typ.OfType
+		case *NonNull:
+			unmodifiedType = typ.OfType
+		default:
+			return unmodifiedType
 		}
-		if ttype, ok := unmodifiedType.(*NonNull); ok {
-			unmodifiedType = ttype.OfType
-			continue
-		}
-		break
 	}
-	return unmodifiedType
 }
 
 // Scalar Type Definition
@@ -428,9 +403,8 @@ func (gt *Object) AddFieldConfig(fieldName string, fieldConfig *Field) {
 	if fieldName == "" || fieldConfig == nil {
 		return
 	}
-	switch gt.typeConfig.Fields.(type) {
-	case Fields:
-		gt.typeConfig.Fields.(Fields)[fieldName] = fieldConfig
+	if fields, ok := gt.typeConfig.Fields.(Fields); ok {
+		fields[fieldName] = fieldConfig
 		gt.initialisedFields = false
 	}
 }
@@ -449,16 +423,14 @@ func (gt *Object) Fields() FieldDefinitionMap {
 	}
 
 	var configureFields Fields
-	switch gt.typeConfig.Fields.(type) {
+	switch fields := gt.typeConfig.Fields.(type) {
 	case Fields:
-		configureFields = gt.typeConfig.Fields.(Fields)
+		configureFields = fields
 	case FieldsThunk:
-		configureFields = gt.typeConfig.Fields.(FieldsThunk)()
+		configureFields = fields()
 	}
 
-	fields, err := defineFieldMap(gt, configureFields)
-	gt.err = err
-	gt.fields = fields
+	gt.fields, gt.err = defineFieldMap(gt, configureFields)
 	gt.initialisedFields = true
 	return gt.fields
 }
@@ -469,11 +441,11 @@ func (gt *Object) Interfaces() []*Interface {
 	}
 
 	var configInterfaces []*Interface
-	switch gt.typeConfig.Interfaces.(type) {
+	switch iface := gt.typeConfig.Interfaces.(type) {
 	case InterfacesThunk:
-		configInterfaces = gt.typeConfig.Interfaces.(InterfacesThunk)()
+		configInterfaces = iface()
 	case []*Interface:
-		configInterfaces = gt.typeConfig.Interfaces.([]*Interface)
+		configInterfaces = iface
 	case nil:
 	default:
 		gt.err = fmt.Errorf("Unknown Object.Interfaces type: %T", gt.typeConfig.Interfaces)
@@ -481,9 +453,7 @@ func (gt *Object) Interfaces() []*Interface {
 		return nil
 	}
 
-	interfaces, err := defineInterfaces(gt, configInterfaces)
-	gt.err = err
-	gt.interfaces = interfaces
+	gt.interfaces, gt.err = defineInterfaces(gt, configInterfaces)
 	gt.initialisedInterfaces = true
 	return gt.interfaces
 }
@@ -549,8 +519,7 @@ func defineFieldMap(ttype Named, fieldMap Fields) (FieldDefinitionMap, error) {
 		if field.Type.Error() != nil {
 			return resultFieldMap, field.Type.Error()
 		}
-		err = assertValidName(fieldName)
-		if err != nil {
+		if err = assertValidName(fieldName); err != nil {
 			return resultFieldMap, err
 		}
 		fieldDef := &FieldDefinition{
@@ -563,22 +532,19 @@ func defineFieldMap(ttype Named, fieldMap Fields) (FieldDefinitionMap, error) {
 
 		fieldDef.Args = []*Argument{}
 		for argName, arg := range field.Args {
-			err := assertValidName(argName)
-			if err != nil {
+			if err = assertValidName(argName); err != nil {
 				return resultFieldMap, err
 			}
-			err = invariantf(
+			if err = invariantf(
 				arg != nil,
 				`%v.%v args must be an object with argument names as keys.`, ttype, fieldName,
-			)
-			if err != nil {
+			); err != nil {
 				return resultFieldMap, err
 			}
-			err = invariantf(
+			if err = invariantf(
 				arg.Type != nil,
 				`%v.%v(%v:) argument type must be Input Type but got: %v.`, ttype, fieldName, argName, arg.Type,
-			)
-			if err != nil {
+			); err != nil {
 				return resultFieldMap, err
 			}
 			fieldArg := &Argument{
@@ -736,14 +702,10 @@ type ResolveTypeFn func(p ResolveTypeParams) *Object
 func NewInterface(config InterfaceConfig) *Interface {
 	it := &Interface{}
 
-	err := invariant(config.Name != "", "Type must be named.")
-	if err != nil {
-		it.err = err
+	if it.err = invariant(config.Name != "", "Type must be named."); it.err != nil {
 		return it
 	}
-	err = assertValidName(config.Name)
-	if err != nil {
-		it.err = err
+	if it.err = assertValidName(config.Name); it.err != nil {
 		return it
 	}
 	it.PrivateName = config.Name
@@ -758,9 +720,8 @@ func (it *Interface) AddFieldConfig(fieldName string, fieldConfig *Field) {
 	if fieldName == "" || fieldConfig == nil {
 		return
 	}
-	switch it.typeConfig.Fields.(type) {
-	case Fields:
-		it.typeConfig.Fields.(Fields)[fieldName] = fieldConfig
+	if fields, ok := it.typeConfig.Fields.(Fields); ok {
+		fields[fieldName] = fieldConfig
 		it.initialisedFields = false
 	}
 }
@@ -779,16 +740,14 @@ func (it *Interface) Fields() (fields FieldDefinitionMap) {
 	}
 
 	var configureFields Fields
-	switch it.typeConfig.Fields.(type) {
+	switch fields := it.typeConfig.Fields.(type) {
 	case Fields:
-		configureFields = it.typeConfig.Fields.(Fields)
+		configureFields = fields
 	case FieldsThunk:
-		configureFields = it.typeConfig.Fields.(FieldsThunk)()
+		configureFields = fields()
 	}
 
-	fields, err := defineFieldMap(it, configureFields)
-	it.err = err
-	it.fields = fields
+	it.fields, it.err = defineFieldMap(it, configureFields)
 	it.initialisedFields = true
 	return it.fields
 }
@@ -842,47 +801,37 @@ type UnionConfig struct {
 func NewUnion(config UnionConfig) *Union {
 	objectType := &Union{}
 
-	err := invariant(config.Name != "", "Type must be named.")
-	if err != nil {
-		objectType.err = err
+	if objectType.err = invariant(config.Name != "", "Type must be named."); objectType.err != nil {
 		return objectType
 	}
-	err = assertValidName(config.Name)
-	if err != nil {
-		objectType.err = err
+	if objectType.err = assertValidName(config.Name); objectType.err != nil {
 		return objectType
 	}
 	objectType.PrivateName = config.Name
 	objectType.PrivateDescription = config.Description
 	objectType.ResolveType = config.ResolveType
 
-	err = invariantf(
+	if objectType.err = invariantf(
 		len(config.Types) > 0,
 		`Must provide Array of types for Union %v.`, config.Name,
-	)
-	if err != nil {
-		objectType.err = err
+	); objectType.err != nil {
 		return objectType
 	}
 	for _, ttype := range config.Types {
-		err := invariantf(
+		if objectType.err = invariantf(
 			ttype != nil,
 			`%v may only contain Object types, it cannot contain: %v.`, objectType, ttype,
-		)
-		if err != nil {
-			objectType.err = err
+		); objectType.err != nil {
 			return objectType
 		}
 		if objectType.ResolveType == nil {
-			err = invariantf(
+			if objectType.err = invariantf(
 				ttype.IsTypeOf != nil,
 				`Union Type %v does not provide a "resolveType" function `+
 					`and possible Type %v does not provide a "isTypeOf" `+
 					`function. There is no way to resolve this possible type `+
 					`during execution.`, objectType, ttype,
-			)
-			if err != nil {
-				objectType.err = err
+			); objectType.err != nil {
 				return objectType
 			}
 		}
@@ -961,44 +910,38 @@ func NewEnum(config EnumConfig) *Enum {
 	gt := &Enum{}
 	gt.enumConfig = config
 
-	err := assertValidName(config.Name)
-	if err != nil {
-		gt.err = err
+	if gt.err = assertValidName(config.Name); gt.err != nil {
 		return gt
 	}
 
 	gt.PrivateName = config.Name
 	gt.PrivateDescription = config.Description
-	gt.values, err = gt.defineEnumValues(config.Values)
-	if err != nil {
-		gt.err = err
+	if gt.values, gt.err = gt.defineEnumValues(config.Values); gt.err != nil {
 		return gt
 	}
 
 	return gt
 }
 func (gt *Enum) defineEnumValues(valueMap EnumValueConfigMap) ([]*EnumValueDefinition, error) {
+	var err error
 	values := []*EnumValueDefinition{}
 
-	err := invariantf(
+	if err = invariantf(
 		len(valueMap) > 0,
 		`%v values must be an object with value names as keys.`, gt,
-	)
-	if err != nil {
+	); err != nil {
 		return values, err
 	}
 
 	for valueName, valueConfig := range valueMap {
-		err := invariantf(
+		if err = invariantf(
 			valueConfig != nil,
 			`%v.%v must refer to an object with a "value" key `+
 				`representing an internal value but got: %v.`, gt, valueName, valueConfig,
-		)
-		if err != nil {
+		); err != nil {
 			return values, err
 		}
-		err = assertValidName(valueName)
-		if err != nil {
+		if err = assertValidName(valueName); err != nil {
 			return values, err
 		}
 		value := &EnumValueDefinition{
@@ -1019,7 +962,10 @@ func (gt *Enum) Values() []*EnumValueDefinition {
 }
 func (gt *Enum) Serialize(value interface{}) interface{} {
 	v := value
-	if reflect.ValueOf(v).Kind() == reflect.Ptr {
+	rv := reflect.ValueOf(v)
+	if kind := rv.Kind(); kind == reflect.Ptr && rv.IsNil() {
+		return nil
+	} else if kind == reflect.Ptr {
 		v = reflect.Indirect(reflect.ValueOf(v)).Interface()
 	}
 	if enumValue, ok := gt.getValueLookup()[v]; ok {
@@ -1130,7 +1076,6 @@ func (st *InputObjectField) Name() string {
 }
 func (st *InputObjectField) Description() string {
 	return st.PrivateDescription
-
 }
 func (st *InputObjectField) String() string {
 	return st.PrivateName
@@ -1150,35 +1095,33 @@ type InputObjectConfig struct {
 
 func NewInputObject(config InputObjectConfig) *InputObject {
 	gt := &InputObject{}
-	err := invariant(config.Name != "", "Type must be named.")
-	if err != nil {
-		gt.err = err
+	if gt.err = invariant(config.Name != "", "Type must be named."); gt.err != nil {
 		return gt
 	}
 
 	gt.PrivateName = config.Name
 	gt.PrivateDescription = config.Description
 	gt.typeConfig = config
-	//gt.fields = gt.defineFieldMap()
 	return gt
 }
 
 func (gt *InputObject) defineFieldMap() InputObjectFieldMap {
-	var fieldMap InputObjectConfigFieldMap
-	switch gt.typeConfig.Fields.(type) {
+	var (
+		fieldMap InputObjectConfigFieldMap
+		err      error
+	)
+	switch fields := gt.typeConfig.Fields.(type) {
 	case InputObjectConfigFieldMap:
-		fieldMap = gt.typeConfig.Fields.(InputObjectConfigFieldMap)
+		fieldMap = fields
 	case InputObjectConfigFieldMapThunk:
-		fieldMap = gt.typeConfig.Fields.(InputObjectConfigFieldMapThunk)()
+		fieldMap = fields()
 	}
 	resultFieldMap := InputObjectFieldMap{}
 
-	err := invariantf(
+	if gt.err = invariantf(
 		len(fieldMap) > 0,
 		`%v fields must be an object with field names as keys or a function which return such an object.`, gt,
-	)
-	if err != nil {
-		gt.err = err
+	); gt.err != nil {
 		return resultFieldMap
 	}
 
@@ -1186,16 +1129,13 @@ func (gt *InputObject) defineFieldMap() InputObjectFieldMap {
 		if fieldConfig == nil {
 			continue
 		}
-		err := assertValidName(fieldName)
-		if err != nil {
+		if err = assertValidName(fieldName); err != nil {
 			continue
 		}
-		err = invariantf(
+		if gt.err = invariantf(
 			fieldConfig.Type != nil,
 			`%v.%v field type must be Input Type but got: %v.`, gt, fieldName, fieldConfig.Type,
-		)
-		if err != nil {
-			gt.err = err
+		); err != nil {
 			return resultFieldMap
 		}
 		field := &InputObjectField{}
@@ -1207,6 +1147,18 @@ func (gt *InputObject) defineFieldMap() InputObjectFieldMap {
 	}
 	gt.init = true
 	return resultFieldMap
+}
+
+func (gt *InputObject) AddFieldConfig(fieldName string, fieldConfig *InputObjectFieldConfig) {
+	if fieldName == "" || fieldConfig == nil {
+		return
+	}
+	fieldMap, ok := gt.typeConfig.Fields.(InputObjectConfigFieldMap)
+	if gt.err = invariant(ok, "Cannot add field to a thunk"); gt.err != nil {
+		return
+	}
+	fieldMap[fieldName] = fieldConfig
+	gt.fields = gt.defineFieldMap()
 }
 
 func (gt *InputObject) Fields() InputObjectFieldMap {
@@ -1253,9 +1205,8 @@ type List struct {
 func NewList(ofType Type) *List {
 	gl := &List{}
 
-	err := invariantf(ofType != nil, `Can only create List of a Type but got: %v.`, ofType)
-	if err != nil {
-		gl.err = err
+	gl.err = invariantf(ofType != nil, `Can only create List of a Type but got: %v.`, ofType)
+	if gl.err != nil {
 		return gl
 	}
 
@@ -1306,9 +1257,8 @@ func NewNonNull(ofType Type) *NonNull {
 	gl := &NonNull{}
 
 	_, isOfTypeNonNull := ofType.(*NonNull)
-	err := invariantf(ofType != nil && !isOfTypeNonNull, `Can only create NonNull of a Nullable Type but got: %v.`, ofType)
-	if err != nil {
-		gl.err = err
+	gl.err = invariantf(ofType != nil && !isOfTypeNonNull, `Can only create NonNull of a Nullable Type but got: %v.`, ofType)
+	if gl.err != nil {
 		return gl
 	}
 	gl.OfType = ofType
@@ -1330,11 +1280,32 @@ func (gl *NonNull) Error() error {
 	return gl.err
 }
 
-var NameRegExp, _ = regexp.Compile("^[_a-zA-Z][_a-zA-Z0-9]*$")
+var NameRegExp = regexp.MustCompile("^[_a-zA-Z][_a-zA-Z0-9]*$")
 
 func assertValidName(name string) error {
 	return invariantf(
 		NameRegExp.MatchString(name),
 		`Names must match /^[_a-zA-Z][_a-zA-Z0-9]*$/ but "%v" does not.`, name)
 
+}
+
+type responsePath struct {
+	Prev *responsePath
+	Key  interface{}
+}
+
+// WithKey returns a new responsePath containing the new key.
+func (p *responsePath) WithKey(key interface{}) *responsePath {
+	return &responsePath{
+		Prev: p,
+		Key:  key,
+	}
+}
+
+// AsArray returns an array of path keys.
+func (p *responsePath) AsArray() []interface{} {
+	if p == nil {
+		return nil
+	}
+	return append(p.Prev.AsArray(), p.Key)
 }

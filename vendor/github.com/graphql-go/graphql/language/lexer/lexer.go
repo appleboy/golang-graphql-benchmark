@@ -31,6 +31,24 @@ const (
 	FLOAT
 	STRING
 	BLOCK_STRING
+	AMP
+)
+
+// NAME -> keyword relationship
+const (
+	FRAGMENT     = "fragment"
+	QUERY        = "query"
+	MUTATION     = "mutation"
+	SUBSCRIPTION = "subscription"
+	SCHEMA       = "schema"
+	SCALAR       = "scalar"
+	TYPE         = "type"
+	INTERFACE    = "interface"
+	UNION        = "union"
+	ENUM         = "enum"
+	INPUT        = "input"
+	EXTEND       = "extend"
+	DIRECTIVE    = "directive"
 )
 
 var TokenKind map[int]int
@@ -38,45 +56,50 @@ var tokenDescription map[int]string
 
 func init() {
 	TokenKind = make(map[int]int)
+	{
+		TokenKind[EOF] = EOF
+		TokenKind[BANG] = BANG
+		TokenKind[DOLLAR] = DOLLAR
+		TokenKind[PAREN_L] = PAREN_L
+		TokenKind[PAREN_R] = PAREN_R
+		TokenKind[SPREAD] = SPREAD
+		TokenKind[COLON] = COLON
+		TokenKind[EQUALS] = EQUALS
+		TokenKind[AT] = AT
+		TokenKind[BRACKET_L] = BRACKET_L
+		TokenKind[BRACKET_R] = BRACKET_R
+		TokenKind[BRACE_L] = BRACE_L
+		TokenKind[PIPE] = PIPE
+		TokenKind[BRACE_R] = BRACE_R
+		TokenKind[NAME] = NAME
+		TokenKind[INT] = INT
+		TokenKind[FLOAT] = FLOAT
+		TokenKind[STRING] = STRING
+		TokenKind[BLOCK_STRING] = BLOCK_STRING
+	}
 	tokenDescription = make(map[int]string)
-	TokenKind[EOF] = EOF
-	TokenKind[BANG] = BANG
-	TokenKind[DOLLAR] = DOLLAR
-	TokenKind[PAREN_L] = PAREN_L
-	TokenKind[PAREN_R] = PAREN_R
-	TokenKind[SPREAD] = SPREAD
-	TokenKind[COLON] = COLON
-	TokenKind[EQUALS] = EQUALS
-	TokenKind[AT] = AT
-	TokenKind[BRACKET_L] = BRACKET_L
-	TokenKind[BRACKET_R] = BRACKET_R
-	TokenKind[BRACE_L] = BRACE_L
-	TokenKind[PIPE] = PIPE
-	TokenKind[BRACE_R] = BRACE_R
-	TokenKind[NAME] = NAME
-	TokenKind[INT] = INT
-	TokenKind[FLOAT] = FLOAT
-	TokenKind[STRING] = STRING
-	TokenKind[BLOCK_STRING] = BLOCK_STRING
-	tokenDescription[TokenKind[EOF]] = "EOF"
-	tokenDescription[TokenKind[BANG]] = "!"
-	tokenDescription[TokenKind[DOLLAR]] = "$"
-	tokenDescription[TokenKind[PAREN_L]] = "("
-	tokenDescription[TokenKind[PAREN_R]] = ")"
-	tokenDescription[TokenKind[SPREAD]] = "..."
-	tokenDescription[TokenKind[COLON]] = ":"
-	tokenDescription[TokenKind[EQUALS]] = "="
-	tokenDescription[TokenKind[AT]] = "@"
-	tokenDescription[TokenKind[BRACKET_L]] = "["
-	tokenDescription[TokenKind[BRACKET_R]] = "]"
-	tokenDescription[TokenKind[BRACE_L]] = "{"
-	tokenDescription[TokenKind[PIPE]] = "|"
-	tokenDescription[TokenKind[BRACE_R]] = "}"
-	tokenDescription[TokenKind[NAME]] = "Name"
-	tokenDescription[TokenKind[INT]] = "Int"
-	tokenDescription[TokenKind[FLOAT]] = "Float"
-	tokenDescription[TokenKind[STRING]] = "String"
-	tokenDescription[TokenKind[BLOCK_STRING]] = "BlockString"
+	{
+		tokenDescription[TokenKind[EOF]] = "EOF"
+		tokenDescription[TokenKind[BANG]] = "!"
+		tokenDescription[TokenKind[DOLLAR]] = "$"
+		tokenDescription[TokenKind[PAREN_L]] = "("
+		tokenDescription[TokenKind[PAREN_R]] = ")"
+		tokenDescription[TokenKind[SPREAD]] = "..."
+		tokenDescription[TokenKind[COLON]] = ":"
+		tokenDescription[TokenKind[EQUALS]] = "="
+		tokenDescription[TokenKind[AT]] = "@"
+		tokenDescription[TokenKind[BRACKET_L]] = "["
+		tokenDescription[TokenKind[BRACKET_R]] = "]"
+		tokenDescription[TokenKind[BRACE_L]] = "{"
+		tokenDescription[TokenKind[PIPE]] = "|"
+		tokenDescription[TokenKind[BRACE_R]] = "}"
+		tokenDescription[TokenKind[NAME]] = "Name"
+		tokenDescription[TokenKind[INT]] = "Int"
+		tokenDescription[TokenKind[FLOAT]] = "Float"
+		tokenDescription[TokenKind[STRING]] = "String"
+		tokenDescription[TokenKind[BLOCK_STRING]] = "BlockString"
+		tokenDescription[TokenKind[AMP]] = "&"
+	}
 }
 
 // Token is a representation of a lexed Token. Value only appears for non-punctuation
@@ -440,7 +463,7 @@ func lineIsBlank(in string) bool {
 	return leadingWhitespaceLen(in) == len(in)
 }
 
-// Converts four hexidecimal chars to the integer that the
+// Converts four hexadecimal chars to the integer that the
 // string represents. For example, uniCharCode('0','0','0','f')
 // will return 15, and uniCharCode('0','0','f','f') returns 255.
 // Returns a negative number on error, if a char was invalid.
@@ -505,6 +528,9 @@ func readToken(s *source.Source, fromPosition int) (Token, error) {
 	// $
 	case '$':
 		return makeToken(TokenKind[DOLLAR], position, position+1, ""), nil
+	// &
+	case '&':
+		return makeToken(TokenKind[AMP], position, position+1, ""), nil
 	// (
 	case '(':
 		return makeToken(TokenKind[PAREN_L], position, position+1, ""), nil
