@@ -1,25 +1,28 @@
 package main
 
 import (
-	"log"
-	"net/http"
-	"os"
+	"fmt"
 
 	"github.com/99designs/gqlgen/handler"
 	"github.com/appleboy/golang-graphql-benchmark/golang/gqlgen"
+	"github.com/gin-gonic/gin"
 )
 
-const defaultPort = "8080"
+// Handler initializes the graphql middleware.
+func Handler() gin.HandlerFunc {
+	// Creates a GraphQL-go HTTP handler with the defined schema
+	h := handler.GraphQL(gqlgen.NewExecutableSchema(gqlgen.Config{Resolvers: &gqlgen.Resolver{}}))
+
+	return func(c *gin.Context) {
+		h.ServeHTTP(c.Writer, c.Request)
+	}
+}
 
 func main() {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = defaultPort
-	}
+	r := gin.New()
+	r.POST("/graphql", Handler())
 
-	http.Handle("/", handler.Playground("GraphQL playground", "/graphql"))
-	http.Handle("/graphql", handler.GraphQL(gqlgen.NewExecutableSchema(gqlgen.Config{Resolvers: &gqlgen.Resolver{}})))
-
-	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	fmt.Println("Now server is running on port 8080")
+	fmt.Println("Test with Get      : curl -g 'http://localhost:8080/graphql?query={hello}'")
+	r.Run()
 }

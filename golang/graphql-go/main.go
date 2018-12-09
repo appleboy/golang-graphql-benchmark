@@ -32,7 +32,7 @@ func executeQuery(query string, schema graphql.Schema) *graphql.Result {
 	return result
 }
 
-// Handler initializes the prometheus middleware.
+// Handler initializes the graphql middleware.
 func Handler() gin.HandlerFunc {
 	// Creates a GraphQL-go HTTP handler with the defined schema
 	h := handler.New(&handler.Config{
