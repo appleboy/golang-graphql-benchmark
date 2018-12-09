@@ -4,10 +4,11 @@
 
 benchmark of graphql framework in golang.
 
-* [graphql-go/graphql](https://github.com/graphql-go/graphql) version: 2018-09-12T00:08:44Z
+* [graphql-go/graphql](https://github.com/graphql-go/graphql) version: 2018-12-03T01:16:34Z
 * [playlyfe/go-graphql](https://github.com/playlyfe/go-graphql) version: 2017-04-28T20:40:03Z
-* [graph-gophers/graphql-go](https://github.com/graph-gophers/graphql-go) version: 2018-06-09T14:05:35Z
-* [samsarahq/thunder](https://github.com/samsarahq/thunder) version: 2018-08-21T22:33:29Z
+* [graph-gophers/graphql-go](https://github.com/graph-gophers/graphql-go) version: 2018-11-28T22:09:52Z
+* [samsarahq/thunder](https://github.com/samsarahq/thunder) version: 2018-12-05T21:49:39Z
+* [99designs/gqlgen](https://github.com/99designs/gqlgen) version: 2018-12-02T22:03:39Z
 
 ## Environment
 
@@ -127,6 +128,26 @@ Running 30s test @ http://localhost:8080/graphql
   2066881 requests in 30.09s, 376.49MB read
 Requests/sec:  68685.50
 Transfer/sec:     12.51MB
+```
+
+## [gin + gqlgen](golang/gqlgen)
+
+```
+$ wrk -t12 -c400 -d30s --timeout 10s --script=golang/post.lua --latency http://localhost:8080/graphql
+Running 30s test @ http://localhost:8080/graphql
+  12 threads and 400 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     9.23ms    8.15ms 188.45ms   92.21%
+    Req/Sec     3.94k   642.11     6.90k    72.47%
+  Latency Distribution
+     50%    7.87ms
+     75%    9.41ms
+     90%   13.14ms
+     99%   46.19ms
+  1413697 requests in 30.09s, 180.66MB read
+  Socket errors: connect 0, read 232, write 0, timeout 0
+Requests/sec:  46982.02
+Transfer/sec:      6.00MB
 ```
 
 ## [gin + josn](golang/gin-json)

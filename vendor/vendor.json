@@ -3,6 +3,24 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "XuNj9eCqXoZTXl6ShAtKmBzgPI4=",
+			"path": "github.com/99designs/gqlgen/graphql",
+			"revision": "5c870a489da3eecd57b4152f0501b65cd682f4af",
+			"revisionTime": "2018-12-02T22:03:39Z"
+		},
+		{
+			"checksumSHA1": "GnWnfoGAIoKpjQWS+gzByQHI00Q=",
+			"path": "github.com/99designs/gqlgen/graphql/introspection",
+			"revision": "5c870a489da3eecd57b4152f0501b65cd682f4af",
+			"revisionTime": "2018-12-02T22:03:39Z"
+		},
+		{
+			"checksumSHA1": "84zeXqaEc/BOJ/d31UW1BsR6V54=",
+			"path": "github.com/99designs/gqlgen/handler",
+			"revision": "5c870a489da3eecd57b4152f0501b65cd682f4af",
+			"revisionTime": "2018-12-02T22:03:39Z"
+		},
+		{
 			"checksumSHA1": "ZmmxqyS6RGbWls7u8VrFJvKGC3g=",
 			"path": "github.com/campoy/embedmd",
 			"revision": "97c13d6e41602fc6e397eb51c45f38069371a969",
@@ -445,6 +463,18 @@
 			"path": "github.com/ugorji/go/codec",
 			"revision": "e72634d4d386b3c7bad60db1db133e72765d9299",
 			"revisionTime": "2018-12-06T14:47:55Z"
+		},
+		{
+			"checksumSHA1": "vHjtXqvLSWhgboGIBPBj97CnpdQ=",
+			"path": "github.com/vektah/gqlparser",
+			"revision": "e805d08bb209b1accdea76bd2327811858d81985",
+			"revisionTime": "2018-11-28T02:33:03Z"
+		},
+		{
+			"checksumSHA1": "BU+TxQgx8rvLLKLzUy5RXS3vg4s=",
+			"path": "github.com/vektah/gqlparser/ast",
+			"revision": "e805d08bb209b1accdea76bd2327811858d81985",
+			"revisionTime": "2018-11-28T02:33:03Z"
 		},
 		{
 			"checksumSHA1": "ETfjuu5F8ejF27iatik4uPga2VQ=",
