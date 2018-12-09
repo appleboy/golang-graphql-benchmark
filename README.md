@@ -61,10 +61,11 @@ $ go test -v -bench=Route -benchmem
 Result:
 
 ```
-BenchmarkGinHttpRoute-12                  300000              3998 ns/op            1423 B/op         18 allocs/op
-BenchmarkGinGoGraphQLRoute-12              20000             66478 ns/op           17599 B/op        226 allocs/op
-BenchmarkGinGopherGraphQLRoute-12        1000000              1740 ns/op            1066 B/op          6 allocs/op
-BenchmarkGinThunderGraphQLRoute-12        500000              2847 ns/op            1444 B/op         11 allocs/op
+BenchmarkGinHttpRoute-8                   500000              2560 ns/op            1294 B/op         18 allocs/op
+BenchmarkGinGQLGenRoute-8                 500000              2692 ns/op            1649 B/op         12 allocs/op
+BenchmarkGinGoGraphQLRoute-8               50000             39586 ns/op           17070 B/op        221 allocs/op
+BenchmarkGinGopherGraphQLRoute-8         2000000               851 ns/op             969 B/op          6 allocs/op
+BenchmarkGinThunderGraphQLRoute-8        1000000              1793 ns/op            1204 B/op         11 allocs/op
 ```
 
 ## Benchmark from wrk benchmarking tool

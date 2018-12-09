@@ -7,6 +7,8 @@ import (
 	"strings"
 	"testing"
 
+	gqlH "github.com/99designs/gqlgen/handler"
+	"github.com/appleboy/golang-graphql-benchmark/golang/gqlgen"
 	"github.com/gin-gonic/gin"
 	"github.com/graph-gophers/graphql-go/relay"
 	"github.com/graphql-go/handler"
@@ -70,6 +72,23 @@ func BenchmarkGinHttpRoute(B *testing.B) {
 		)
 	})
 	runRequest(B, router, "POST", "/hello")
+}
+
+func goGQLGenHandler() gin.HandlerFunc {
+	// Creates a GraphQL-go HTTP handler with the defined schema
+	h := gqlH.GraphQL(gqlgen.NewExecutableSchema(gqlgen.Config{Resolvers: &gqlgen.Resolver{}}))
+
+	return func(c *gin.Context) {
+		h.ServeHTTP(c.Writer, c.Request)
+	}
+}
+
+func BenchmarkGinGQLGenRoute(B *testing.B) {
+	gin.SetMode(gin.ReleaseMode)
+	gin.DefaultWriter = ioutil.Discard
+	router := gin.New()
+	router.POST("/graphql", goGQLGenHandler())
+	runRequest(B, router, "POST", "/graphql")
 }
 
 func BenchmarkGinGoGraphQLRoute(B *testing.B) {
