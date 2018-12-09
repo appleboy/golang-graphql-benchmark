@@ -1,0 +1,11 @@
+kind: pipeline
+name: testing
+
+steps:
+  - name: testing
+    image: golang:1.11
+    pull: true
+    environment:
+      GO111MODULE: on
+    commands:
+      - go test -v -bench=Master -benchmem
