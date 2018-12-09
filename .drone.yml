@@ -16,3 +16,4 @@ steps:
       GO111MODULE: off
     commands:
       - go test -v -bench=Master -benchmem
+      - go test -v -bench=Route -benchmem
