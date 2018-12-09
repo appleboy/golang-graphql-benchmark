@@ -1,5 +1,7 @@
 # golang-graphql-benchmark
 
+[![Build Status](https://cloud.drone.io/api/badges/appleboy/golang-graphql-benchmark/status.svg)](https://cloud.drone.io/appleboy/golang-graphql-benchmark)
+
 benchmark of graphql framework in golang.
 
 * [graphql-go/graphql](https://github.com/graphql-go/graphql) version: 2018-09-12T00:08:44Z
@@ -149,7 +151,7 @@ Transfer/sec:     19.18MB
 ## Sumary
 
 |                   | Requests/sec |
-|-------------------|--------------|
+| ----------------- | ------------ |
 | graphql-go        | 31071.70     |
 | **graph-gophers** | **96944.53** |
 | thunder           | 68685.50     |
@@ -157,5 +159,5 @@ Transfer/sec:     19.18MB
 Without graphql (only gin render json output)
 
 |                      | Requests/sec  |
-|----------------------|---------------|
+| -------------------- | ------------- |
 | json without graphql | **134982.90** |
