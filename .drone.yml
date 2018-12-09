@@ -1,6 +1,13 @@
 kind: pipeline
 name: testing
 
+workspace:
+  base: /go
+  path: src/github.com/appleboy/golang-graphql-benchmark
+
+clone:
+  depth: 50
+
 steps:
   - name: testing
     image: golang:1.11
