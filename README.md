@@ -18,7 +18,7 @@ Memory: 24G
 CPU: Intel(R) Xeon(R) CPU X5670  @ 2.93GHz
 ```
 
-## Benchmark Result
+## Benchmark Result (2018/12/10)
 
 Please execute the following command.
 
@@ -31,10 +31,10 @@ $ go test -v -bench=Master -benchmem
 Result:
 
 ```
-BenchmarkGoGraphQLMaster-12                10000            146557 ns/op           28138 B/op        506 allocs/op
-BenchmarkPlaylyfeGraphQLMaster-12         200000             11761 ns/op            3175 B/op         61 allocs/op
-BenchmarkGophersGraphQLMaster-12          100000             12985 ns/op            3877 B/op         38 allocs/op
-BenchmarkThunderGraphQLMaster-12          200000              8722 ns/op            2176 B/op         48 allocs/op
+BenchmarkGoGraphQLMaster-12                10000            126120 ns/op           27216 B/op        452 allocs/op
+BenchmarkPlaylyfeGraphQLMaster-12         200000             10094 ns/op            2919 B/op         57 allocs/op
+BenchmarkGophersGraphQLMaster-12          100000             11242 ns/op            3762 B/op         39 allocs/op
+BenchmarkThunderGraphQLMaster-12          200000              6985 ns/op            1968 B/op         42 allocs/op
 ```
 
 set `benchtime` to `3s`
@@ -46,10 +46,10 @@ $ go test -v -bench=Master -benchmem -benchtime=3s
 Result: 
 
 ```
-BenchmarkGoGraphQLMaster-12                30000            146054 ns/op           28136 B/op        506 allocs/op
-BenchmarkPlaylyfeGraphQLMaster-12         500000             12062 ns/op            3175 B/op         61 allocs/op
-BenchmarkGophersGraphQLMaster-12          300000             12955 ns/op            3877 B/op         38 allocs/op
-BenchmarkThunderGraphQLMaster-12          500000              8756 ns/op            2176 B/op         48 allocs/op
+BenchmarkGoGraphQLMaster-12                30000            124961 ns/op           27215 B/op        452 allocs/op
+BenchmarkPlaylyfeGraphQLMaster-12         500000             10013 ns/op            2918 B/op         57 allocs/op
+BenchmarkGophersGraphQLMaster-12          500000             11166 ns/op            3762 B/op         39 allocs/op
+BenchmarkThunderGraphQLMaster-12          500000              6726 ns/op            1968 B/op         42 allocs/op
 ```
 
 Testing with http framwork using [Gin](https://github.com/gin-gonic/gin)
@@ -61,11 +61,11 @@ $ go test -v -bench=Route -benchmem
 Result:
 
 ```
-BenchmarkGinHttpRoute-8                   500000              2560 ns/op            1294 B/op         18 allocs/op
-BenchmarkGinGQLGenRoute-8                 500000              2692 ns/op            1649 B/op         12 allocs/op
-BenchmarkGinGoGraphQLRoute-8               50000             39586 ns/op           17070 B/op        221 allocs/op
-BenchmarkGinGopherGraphQLRoute-8         2000000               851 ns/op             969 B/op          6 allocs/op
-BenchmarkGinThunderGraphQLRoute-8        1000000              1793 ns/op            1204 B/op         11 allocs/op
+BenchmarkGinHttpRoute-12                  300000              3719 ns/op            1279 B/op         18 allocs/op
+BenchmarkGinGQLGenRoute-12                500000              3816 ns/op            1650 B/op         12 allocs/op
+BenchmarkGinGoGraphQLRoute-12              30000             57065 ns/op           17195 B/op        221 allocs/op
+BenchmarkGinGopherGraphQLRoute-12        1000000              1680 ns/op             969 B/op          6 allocs/op
+BenchmarkGinThunderGraphQLRoute-12        500000              2854 ns/op            1204 B/op         11 allocs/op
 ```
 
 ## Benchmark from wrk benchmarking tool
@@ -81,16 +81,16 @@ $ wrk -t12 -c400 -d30s --timeout 10s --script=golang/post.lua --latency http://l
 Running 30s test @ http://localhost:8080/graphql
   12 threads and 400 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency    16.22ms   16.63ms 236.12ms   86.17%
-    Req/Sec     2.60k   233.08     4.02k    73.14%
+    Latency    18.18ms   22.03ms 290.57ms   85.91%
+    Req/Sec     2.81k   403.63     9.79k    78.24%
   Latency Distribution
-     50%   10.90ms
-     75%   22.76ms
-     90%   38.29ms
-     99%   75.06ms
-  933231 requests in 30.03s, 132.61MB read
-Requests/sec:  31071.70
-Transfer/sec:      4.42MB
+     50%   10.80ms
+     75%   26.46ms
+     90%   48.24ms
+     99%   96.89ms
+  1006733 requests in 30.10s, 143.05MB read
+Requests/sec:  33448.20
+Transfer/sec:      4.75MB
 ```
 
 ## [gin + graph-gophers](golang/graph-gophers)
@@ -100,35 +100,35 @@ $ wrk -t12 -c400 -d30s --timeout 10s --script=golang/post.lua --latency http://l
 Running 30s test @ http://localhost:8080/graphql
   12 threads and 400 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency     4.39ms    3.61ms 206.07ms   88.34%
-    Req/Sec     8.14k     1.18k   29.35k    91.89%
+    Latency     7.35ms    9.92ms 228.60ms   91.21%
+    Req/Sec     6.11k     2.12k   12.27k    72.83%
   Latency Distribution
-     50%    3.61ms
-     75%    4.93ms
-     90%    7.57ms
-     99%   18.61ms
-  2918001 requests in 30.10s, 372.90MB read
-Requests/sec:  96944.53
-Transfer/sec:     12.39MB
+     50%    5.06ms
+     75%    9.00ms
+     90%   16.11ms
+     99%   45.78ms
+  2179756 requests in 30.06s, 278.56MB read
+Requests/sec:  72506.58
+Transfer/sec:      9.27MB
 ```
 
 ## [gin + thunder](golang/thunder)
 
 ```
-$ wrk -t12 -c400 -d30s --timeout 10s --script=golang/post.lua --latency "http://localhost:8080/graphql"
+$ wrk -t12 -c400 -d30s --timeout 10s --script=golang/post.lua --latency http://localhost:8080/graphql
 Running 30s test @ http://localhost:8080/graphql
   12 threads and 400 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency     5.76ms    4.00ms 209.77ms   87.50%
-    Req/Sec     5.76k   510.83    12.64k    91.89%
+    Latency    11.10ms   16.33ms 258.10ms   87.78%
+    Req/Sec     6.04k     1.04k   11.57k    81.34%
   Latency Distribution
-     50%    5.48ms
-     75%    7.21ms
-     90%    9.20ms
-     99%   14.06ms
-  2066881 requests in 30.09s, 376.49MB read
-Requests/sec:  68685.50
-Transfer/sec:     12.51MB
+     50%    3.40ms
+     75%   15.15ms
+     90%   31.05ms
+     99%   74.53ms
+  2148076 requests in 30.02s, 391.28MB read
+Requests/sec:  71551.64
+Transfer/sec:     13.03MB
 ```
 
 ## [gin + gqlgen](golang/gqlgen)
@@ -138,17 +138,16 @@ $ wrk -t12 -c400 -d30s --timeout 10s --script=golang/post.lua --latency http://l
 Running 30s test @ http://localhost:8080/graphql
   12 threads and 400 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency     9.23ms    8.15ms 188.45ms   92.21%
-    Req/Sec     3.94k   642.11     6.90k    72.47%
+    Latency     5.61ms    8.24ms 257.19ms   92.70%
+    Req/Sec     8.39k     1.31k   18.66k    82.80%
   Latency Distribution
-     50%    7.87ms
-     75%    9.41ms
-     90%   13.14ms
-     99%   46.19ms
-  1413697 requests in 30.09s, 180.66MB read
-  Socket errors: connect 0, read 232, write 0, timeout 0
-Requests/sec:  46982.02
-Transfer/sec:      6.00MB
+     50%    4.42ms
+     75%    8.93ms
+     90%   12.21ms
+     99%   29.50ms
+  2991677 requests in 30.02s, 382.31MB read
+Requests/sec:  99645.21
+Transfer/sec:     12.73MB
 ```
 
 ## [gin + josn](golang/gin-json)
@@ -158,28 +157,29 @@ $ wrk -t12 -c400 -d30s --timeout 10s --script=golang/json.lua --latency http://l
 Running 30s test @ http://localhost:8080/graphql
   12 threads and 400 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency     3.40ms    3.07ms  43.04ms   89.83%
-    Req/Sec    11.31k   671.31    19.84k    72.50%
+    Latency     4.19ms    4.81ms 204.15ms   88.81%
+    Req/Sec    10.47k     1.93k   99.89k    89.61%
   Latency Distribution
-     50%    2.58ms
-     75%    3.78ms
-     90%    6.45ms
-     99%   16.51ms
-  4057155 requests in 30.06s, 576.51MB read
-Requests/sec: 134982.90
-Transfer/sec:     19.18MB
+     50%    3.17ms
+     75%    5.07ms
+     90%    9.69ms
+     99%   23.51ms
+  3752158 requests in 30.10s, 533.17MB read
+Requests/sec: 124663.94
+Transfer/sec:     17.71MB
 ```
 
 ## Sumary
 
 |                   | Requests/sec |
 | ----------------- | ------------ |
-| graphql-go        | 31071.70     |
-| **graph-gophers** | **96944.53** |
-| thunder           | 68685.50     |
+| graphql-go        | 33448.20     |
+| graph-gophers     | 72506.58     |
+| thunder           | 71551.64     |
+| gqlgen            | **99645.21** |
 
 Without graphql (only gin render json output)
 
 |                      | Requests/sec  |
 | -------------------- | ------------- |
-| json without graphql | **134982.90** |
+| json without graphql | **124663.94** |
