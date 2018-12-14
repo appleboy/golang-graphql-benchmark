@@ -52,6 +52,6 @@ func main() {
 	r.POST("/graphql", Handler())
 
 	fmt.Println("Now server is running on port 8080")
-	fmt.Println("Test with Get      : curl -g 'http://localhost:8080/graphql?query={hello}'")
+	fmt.Println("Test with POST      : curl -g --request POST 'http://localhost:8080/graphql?query={hello}'")
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
