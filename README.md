@@ -169,7 +169,7 @@ Requests/sec: 124663.94
 Transfer/sec:     17.71MB
 ```
 
-## Sumary
+## Summary
 
 |                   | Requests/sec |
 | ----------------- | ------------ |
