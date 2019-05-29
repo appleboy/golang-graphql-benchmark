@@ -7,8 +7,9 @@ import (
 	"strings"
 	"testing"
 
+  "github.com/appleboy/golang-graphql-benchmark/golang/gqlgen"
+
 	gqlH "github.com/99designs/gqlgen/handler"
-	"github.com/appleboy/golang-graphql-benchmark/golang/gqlgen"
 	"github.com/gin-gonic/gin"
 	"github.com/graph-gophers/graphql-go/relay"
 	"github.com/graphql-go/handler"
