@@ -4,21 +4,13 @@
 
 benchmark of graphql framework in golang.
 
-* [graphql-go/graphql](https://github.com/graphql-go/graphql) version: 2018-12-03T01:16:34Z
-* [playlyfe/go-graphql](https://github.com/playlyfe/go-graphql) version: 2017-04-28T20:40:03Z
-* [graph-gophers/graphql-go](https://github.com/graph-gophers/graphql-go) version: 2018-11-28T22:09:52Z
-* [samsarahq/thunder](https://github.com/samsarahq/thunder) version: 2018-12-05T21:49:39Z
-* [99designs/gqlgen](https://github.com/99designs/gqlgen) version: 2018-12-02T22:03:39Z
+* [graphql-go/graphql](https://github.com/graphql-go/graphql) version: v0.7.8
+* [playlyfe/go-graphql](https://github.com/playlyfe/go-graphql) version: 20190221134955-27b2df222857
+* [graph-gophers/graphql-go](https://github.com/graph-gophers/graphql-go) version: v0.0.0-20190513003547-158e7b876106
+* [samsarahq/thunder](https://github.com/samsarahq/thunder) version: v0.5.0
+* [99designs/gqlgen](https://github.com/99designs/gqlgen) version: v0.9.0
 
-## Environment
-
-```
-OS: Ubuntu 14.04
-Memory: 24G
-CPU: Intel(R) Xeon(R) CPU X5670  @ 2.93GHz
-```
-
-## Benchmark Result (2018/12/10)
+## Benchmark Result (2019/05/29)
 
 Please execute the following command.
 
@@ -31,25 +23,10 @@ $ go test -v -bench=Master -benchmem
 Result:
 
 ```
-BenchmarkGoGraphQLMaster-12                10000            126120 ns/op           27216 B/op        452 allocs/op
-BenchmarkPlaylyfeGraphQLMaster-12         200000             10094 ns/op            2919 B/op         57 allocs/op
-BenchmarkGophersGraphQLMaster-12          100000             11242 ns/op            3762 B/op         39 allocs/op
-BenchmarkThunderGraphQLMaster-12          200000              6985 ns/op            1968 B/op         42 allocs/op
-```
-
-set `benchtime` to `3s`
-
-```
-$ go test -v -bench=Master -benchmem -benchtime=3s
-```
-
-Result: 
-
-```
-BenchmarkGoGraphQLMaster-12                30000            124961 ns/op           27215 B/op        452 allocs/op
-BenchmarkPlaylyfeGraphQLMaster-12         500000             10013 ns/op            2918 B/op         57 allocs/op
-BenchmarkGophersGraphQLMaster-12          500000             11166 ns/op            3762 B/op         39 allocs/op
-BenchmarkThunderGraphQLMaster-12          500000              6726 ns/op            1968 B/op         42 allocs/op
+BenchmarkGoGraphQLMaster-12                10000            120440 ns/op           28016 B/op        467 allocs/op
+BenchmarkPlaylyfeGraphQLMaster-12         200000             10553 ns/op            2918 B/op         57 allocs/op
+BenchmarkGophersGraphQLMaster-12          100000             10500 ns/op            3762 B/op         41 allocs/op
+BenchmarkThunderGraphQLMaster-12          200000              6814 ns/op            2128 B/op         47 allocs/op
 ```
 
 Testing with http framwork using [Gin](https://github.com/gin-gonic/gin)
@@ -61,11 +38,11 @@ $ go test -v -bench=Route -benchmem
 Result:
 
 ```
-BenchmarkGinHttpRoute-12                  300000              3719 ns/op            1279 B/op         18 allocs/op
-BenchmarkGinGQLGenRoute-12                500000              3816 ns/op            1650 B/op         12 allocs/op
-BenchmarkGinGoGraphQLRoute-12              30000             57065 ns/op           17195 B/op        221 allocs/op
-BenchmarkGinGopherGraphQLRoute-12        1000000              1680 ns/op             969 B/op          6 allocs/op
-BenchmarkGinThunderGraphQLRoute-12        500000              2854 ns/op            1204 B/op         11 allocs/op
+BenchmarkGinHttpRoute-12                  300000              3866 ns/op            1279 B/op         18 allocs/op
+BenchmarkGinGQLGenRoute-12                500000              2864 ns/op             629 B/op         11 allocs/op
+BenchmarkGinGoGraphQLRoute-12              30000             53947 ns/op           17451 B/op        228 allocs/op
+BenchmarkGinGopherGraphQLRoute-12        1000000              1659 ns/op             969 B/op          6 allocs/op
+BenchmarkGinThunderGraphQLRoute-12        500000              2717 ns/op            1204 B/op         11 allocs/op
 ```
 
 ## Benchmark from wrk benchmarking tool
