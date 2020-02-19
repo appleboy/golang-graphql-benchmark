@@ -14,5 +14,5 @@ require (
 	github.com/samsarahq/thunder v0.5.0
 	github.com/satori/go.uuid v1.2.0 // indirect
 	github.com/smartystreets/goconvey v1.6.4 // indirect
-	github.com/vektah/gqlparser v1.2.0
+	github.com/vektah/gqlparser/v2 v2.0.1
 )
