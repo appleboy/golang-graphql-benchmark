@@ -3,7 +3,7 @@ module github.com/appleboy/golang-graphql-benchmark
 go 1.12
 
 require (
-	github.com/99designs/gqlgen v0.10.2
+	github.com/99designs/gqlgen v0.11.1
 	github.com/gin-gonic/gin v1.4.0
 	github.com/graph-gophers/graphql-go v0.0.0-20200207002730-8334863f2c8b
 	github.com/graphql-go/graphql v0.7.9
