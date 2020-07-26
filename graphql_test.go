@@ -11,6 +11,7 @@ import (
 func BenchmarkGoGraphQLMaster(b *testing.B) {
 	// Disable SpecifiedRules
 	// graphql.SpecifiedRules = []graphql.ValidationRuleFn{}
+	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		graphql.Do(graphql.Params{
 			Schema:        graphQLGoSchema,
@@ -20,6 +21,7 @@ func BenchmarkGoGraphQLMaster(b *testing.B) {
 }
 
 func BenchmarkPlaylyfeGraphQLMaster(b *testing.B) {
+	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		context := map[string]interface{}{}
 		variables := map[string]interface{}{}
@@ -28,6 +30,7 @@ func BenchmarkPlaylyfeGraphQLMaster(b *testing.B) {
 }
 
 func BenchmarkGophersGraphQLMaster(b *testing.B) {
+	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		ctx := context.Background()
 		variables := map[string]interface{}{}
