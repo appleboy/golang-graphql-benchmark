@@ -10,7 +10,7 @@ benchmark of graphql framework in [go1.14](https://golang.org/doc/go1.14) versio
 * [samsarahq/thunder](https://github.com/samsarahq/thunder) version: v0.5.0
 * [99designs/gqlgen](https://github.com/99designs/gqlgen) version: v0.11.3
 
-## Benchmark Result (2020/03/15)
+## Benchmark Result (2020/07/26)
 
 Please execute the following command.
 
@@ -183,7 +183,8 @@ Transfer/sec:     11.87MB
 | graphql-go        | 19004.92     |
 | graph-gophers     | 44308.44     |
 | thunder           | 40994.33     |
-| gqlgen            | **49925.73** |
+| gqlgen + gin      | 49925.73     |
+| gqlgen + net/http | **52854.88** |
 
 Without graphql (only gin render json output)
 
