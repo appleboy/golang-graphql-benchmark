@@ -115,7 +115,7 @@ Requests/sec:  40994.33
 Transfer/sec:      7.47MB
 ```
 
-### [gin + gqlgen](golang/gqlgen)
+### [gin + gqlgen](golang/gqlgen/gin-server)
 
 ```sh
 $ wrk -t12 -c400 -d30s --timeout 10s --script=golang/post.lua --latency http://localhost:8080/graphql
@@ -133,6 +133,26 @@ Running 30s test @ http://localhost:8080/graphql
   Socket errors: connect 0, read 239, write 0, timeout 0
 Requests/sec:  49925.73
 Transfer/sec:      6.38MB
+```
+
+### [net/http + gqlgen](golang/gqlgen/httpd-server)
+
+```sh
+$ wrk -t12 -c400 -d30s --timeout 10s --latency http://localhost:8080/graphql?query={hello}
+Running 30s test @ http://localhost:8080/graphql?query={hello}
+  12 threads and 400 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     7.61ms    4.44ms 143.61ms   97.03%
+    Req/Sec     4.43k   491.36     6.86k    80.94%
+  Latency Distribution
+     50%    7.24ms
+     75%    8.04ms
+     90%    8.99ms
+     99%   18.35ms
+  1588061 requests in 30.05s, 216.57MB read
+  Socket errors: connect 0, read 255, write 0, timeout 0
+Requests/sec:  52854.88
+Transfer/sec:      7.21MB
 ```
 
 ### [gin + josn](golang/gin-json)
