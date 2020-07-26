@@ -6,8 +6,7 @@ clone:
 
 steps:
   - name: testing
-    image: golang:1.12
-    pull: true
+    image: golang:1.14
     environment:
       GO111MODULE: on
     commands:
