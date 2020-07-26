@@ -6,7 +6,7 @@ benchmark of graphql framework in [go1.14](https://golang.org/doc/go1.14) versio
 
 * [graphql-go/graphql](https://github.com/graphql-go/graphql) version: v0.7.9
 * [playlyfe/go-graphql](https://github.com/playlyfe/go-graphql) version: v0.0.0-20191219091308-23c3f22218ef
-* [graph-gophers/graphql-go](https://github.com/graph-gophers/graphql-go) version: v0.0.0-20200207002730-8334863f2c8b
+* [graph-gophers/graphql-go](https://github.com/graph-gophers/graphql-go) version: v0.0.0-20200622220639-c1d9693c95a6
 * [samsarahq/thunder](https://github.com/samsarahq/thunder) version: v0.5.0
 * [99designs/gqlgen](https://github.com/99designs/gqlgen) version: v0.11.3
 
@@ -23,10 +23,13 @@ go test -v -bench=Master -benchmem
 Result:
 
 ```sh
-BenchmarkGoGraphQLMaster-8                 15282             83858 ns/op           27490 B/op        458 allocs/op
-BenchmarkPlaylyfeGraphQLMaster-8          161757              6852 ns/op            2854 B/op         56 allocs/op
-BenchmarkGophersGraphQLMaster-8           191847              6256 ns/op            3673 B/op         38 allocs/op
-BenchmarkThunderGraphQLMaster-8           426513              2734 ns/op            1336 B/op         30 allocs/op
+goos: linux
+goarch: amd64
+pkg: github.com/appleboy/golang-graphql-benchmark
+BenchmarkGoGraphQLMaster-48               12542       95595 ns/op     27545 B/op       458 allocs/op
+BenchmarkPlaylyfeGraphQLMaster-48        121533       10149 ns/op      2856 B/op        56 allocs/op
+BenchmarkGophersGraphQLMaster-48         164694        7387 ns/op      3683 B/op        38 allocs/op
+BenchmarkThunderGraphQLMaster-48         324243        3776 ns/op      1336 B/op        30 allocs/op
 ```
 
 Testing with http framwork using [Gin](https://github.com/gin-gonic/gin)
@@ -38,11 +41,14 @@ go test -v -bench=Route -benchmem
 Result:
 
 ```sh
-BenchmarkGinHttpRoute-8                   400288              2743 ns/op            1324 B/op         19 allocs/op
-BenchmarkGinGQLGenRoute-8                 402793              3091 ns/op             944 B/op         13 allocs/op
-BenchmarkGinGoGraphQLRoute-8               32685             36864 ns/op           17385 B/op        226 allocs/op
-BenchmarkGinGopherGraphQLRoute-8         1339144               894 ns/op             973 B/op          6 allocs/op
-BenchmarkGinThunderGraphQLRoute-8         660644              1725 ns/op            1179 B/op         11 allocs/op
+goos: linux
+goarch: amd64
+pkg: github.com/appleboy/golang-graphql-benchmark
+BenchmarkGinHttpRoute-48                  391980        3100 ns/op      1262 B/op        18 allocs/op
+BenchmarkGinGQLGenRoute-48                407619        4304 ns/op       944 B/op        13 allocs/op
+BenchmarkGinGoGraphQLRoute-48              30478       37906 ns/op     17482 B/op       226 allocs/op
+BenchmarkGinGopherGraphQLRoute-48         952504        1220 ns/op       972 B/op         6 allocs/op
+BenchmarkGinThunderGraphQLRoute-48        555732        1883 ns/op      1196 B/op        11 allocs/op
 ```
 
 ## Benchmark from wrk benchmarking tool
