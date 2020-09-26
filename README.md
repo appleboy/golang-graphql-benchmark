@@ -2,7 +2,7 @@
 
 [![Build Status](https://cloud.drone.io/api/badges/appleboy/golang-graphql-benchmark/status.svg)](https://cloud.drone.io/appleboy/golang-graphql-benchmark)
 
-benchmark of graphql framework in [go1.14](https://golang.org/doc/go1.14) version.
+benchmark of graphql framework in [go1.15](https://golang.org/doc/go1.15) version.
 
 * [graphql-go/graphql](https://github.com/graphql-go/graphql) version: v0.7.9
 * [playlyfe/go-graphql](https://github.com/playlyfe/go-graphql) version: v0.0.0-20191219091308-23c3f22218ef
