@@ -1,9 +1,9 @@
 module github.com/appleboy/golang-graphql-benchmark
 
-go 1.14
+go 1.15
 
 require (
-	github.com/99designs/gqlgen v0.11.3
+	github.com/99designs/gqlgen v0.13.0
 	github.com/gin-gonic/gin v1.6.3
 	github.com/graph-gophers/graphql-go v0.0.0-20200622220639-c1d9693c95a6
 	github.com/graphql-go/graphql v0.7.9
@@ -16,5 +16,6 @@ require (
 	github.com/samsarahq/thunder v0.5.0
 	github.com/satori/go.uuid v1.2.0 // indirect
 	github.com/smartystreets/goconvey v1.6.4 // indirect
-	github.com/vektah/gqlparser/v2 v2.0.1
+	github.com/vektah/gqlparser v1.3.1 // indirect
+	github.com/vektah/gqlparser/v2 v2.1.0
 )

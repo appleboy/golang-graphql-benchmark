@@ -8,7 +8,7 @@ benchmark of graphql framework in [go1.15](https://golang.org/doc/go1.15) versio
 * [playlyfe/go-graphql](https://github.com/playlyfe/go-graphql) version: v0.0.0-20191219091308-23c3f22218ef
 * [graph-gophers/graphql-go](https://github.com/graph-gophers/graphql-go) version: v0.0.0-20200622220639-c1d9693c95a6
 * [samsarahq/thunder](https://github.com/samsarahq/thunder) version: v0.5.0
-* [99designs/gqlgen](https://github.com/99designs/gqlgen) version: v0.11.3
+* [99designs/gqlgen](https://github.com/99designs/gqlgen) version: v0.13.0
 
 ## Benchmark Result (2020/07/26)
 
