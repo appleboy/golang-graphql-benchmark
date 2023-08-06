@@ -155,7 +155,7 @@ Requests/sec:  52854.88
 Transfer/sec:      7.21MB
 ```
 
-### [gin + josn](golang/gin-json)
+### [gin + json](golang/gin-json)
 
 ```sh
 $ wrk -t12 -c400 -d30s --timeout 10s --script=golang/json.lua --latency http://localhost:8080/graphql
